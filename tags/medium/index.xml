@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Medium - Etiqueta - AntuSec</title>
+        <link>http://localhost:1313/tags/medium/</link>
+        <description>Medium - Etiqueta - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/tags/medium/" rel="self" type="application/rss+xml" /><item>
+    <title>DC-9 Walkthrough</title>
+    <link>http://localhost:1313/dc-9/</link>
+    <pubDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/dc-9/</guid>
+    <description><![CDATA[<p>Pagina de la maquina: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
+<p>Enlace de descarga:  <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
+<p>Dc-9 es una de las maquinas de <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> que contiene el listado de <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit#gid=0" target="_blank" rel="noopener noreffer ">Tjnull</a>, el cual es un listado creado para prepararse el examen del OSCP, esta maquina es la primera de la lista con un nivel similar a las maquinas del curso que el OSCP ofrece.</p>
+<h2 id="escaneo-de-la-red">Escaneo de la Red</h2>
+<p>El primer paso es encontrar la ip de nuestro objetivo, para ello utilizamos Arp-Scan, esta herramienta permite escanear una red LAN y descubrir dispositivos conectados en ella.</p>]]></description>
+</item>
+</channel>
+</rss>

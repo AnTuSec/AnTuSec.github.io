@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Csrf - Etiqueta - AntuSec</title>
+        <link>http://localhost:1313/es/tags/csrf/</link>
+        <description>Csrf - Etiqueta - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 02 Nov 2025 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/es/tags/csrf/" rel="self" type="application/rss+xml" /><item>
+    <title>Cross Site Request Forgery (CSRF)</title>
+    <link>http://localhost:1313/es/csrf/</link>
+    <pubDate>Sun, 02 Nov 2025 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/csrf/</guid>
+    <description><![CDATA[<h2 id="introducción">Introducción</h2>
+<p>En este articulo se va a explicar a modo resumen en que consiste la vulnerabilidad web Cross Site Request Forguery (CSRF) y algunas técnicas de como explotarla en diferentes entornos.</p>
+<p>Para la redacción de este articulo me he basado en los laboratorios de <a href="https://portswigger.net/" target="_blank" rel="noopener noreffer ">portswigger</a> que he realizado para la preparación de su certificación BSCP.</p>
+<h2 id="definición">Definición</h2>
+<p>Esta vulnerabilidad consiste en llevar a cabo acciones por parte de un usuario sin su consentimiento ni conocimiento como puede ser un cambio de correo dentro de una web a través de un link malicioso generado por el atacante, aprovechándose de una mala configuración de la web vulnerable, que enviara al usuario.</p>]]></description>
+</item>
+</channel>
+</rss>

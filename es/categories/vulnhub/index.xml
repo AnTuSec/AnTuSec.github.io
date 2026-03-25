@@ -1,0 +1,87 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Vulnhub - Categoría - AntuSec</title>
+        <link>http://localhost:1313/es/categories/vulnhub/</link>
+        <description>Vulnhub - Categoría - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/es/categories/vulnhub/" rel="self" type="application/rss+xml" /><item>
+    <title>DC-9 Walkthrough</title>
+    <link>http://localhost:1313/es/dc-9/</link>
+    <pubDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/dc-9/</guid>
+    <description><![CDATA[<p>Pagina de la maquina: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
+<p>Enlace de descarga:  <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
+<p>Dc-9 es una de las maquinas de <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> que contiene el listado de <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit#gid=0" target="_blank" rel="noopener noreffer ">Tjnull</a>, el cual es un listado creado para prepararse el examen del OSCP, esta maquina es la primera de la lista con un nivel similar a las maquinas del curso que el OSCP ofrece.</p>
+<h2 id="escaneo-de-la-red">Escaneo de la Red</h2>
+<p>El primer paso es encontrar la ip de nuestro objetivo, para ello utilizamos Arp-Scan, esta herramienta permite escanear una red LAN y descubrir dispositivos conectados en ella.</p>]]></description>
+</item>
+<item>
+    <title>Kioptrix Level 5 Walkthrough</title>
+    <link>http://localhost:1313/es/kioptrix_level_5/</link>
+    <pubDate>Sat, 02 Sep 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/kioptrix_level_5/</guid>
+    <description><![CDATA[<h1 id="kioptrix-level-5">Kioptrix level 5</h1>
+<h2 id="configuración">Configuración</h2>
+<p>Para que la maquina asigne una ip hay que eliminar el adaptador de red y volver a añadirlo.</p>
+<h2 id="resolución">Resolución</h2>
+<h3 id="escaneo-y-nalisis-de-vulnerabilidades">Escaneo y nalisis de Vulnerabilidades</h3>
+<p>Comienzo haciendo un escaneo de la red local con arp-scan para descubrir la ip de la maquina objetivo.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">arp-scan -I eth0 --localnet
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-I -&gt; indicamos la interfaz de red 
+</span></span><span class="line"><span class="cl">--localnet -&gt; indicamos que genere direcciones desde la configuración de la interfaz.</span></span></code></pre></div></div>
+<p></p>]]></description>
+</item>
+<item>
+    <title>Kioptrix Level 3 Walkthrough</title>
+    <link>http://localhost:1313/es/kioptrix_level_3/</link>
+    <pubDate>Fri, 25 Aug 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/kioptrix_level_3/</guid>
+    <description><![CDATA[<h1 id="kioptrix-level-3">Kioptrix Level 3</h1>
+<h2 id="resolución-de-la-maquina">Resolución de la Maquina</h2>
+<h3 id="escaneo-y-análisis-de-vulnerabilidades">Escaneo y Análisis de Vulnerabilidades</h3>
+<p>Empezamos con un escaneo a nuestra red local con el comando arp para obtener la ip de nuestra maquina objetivo.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">arp-scan -I eth0 --localnet</span></span></code></pre></div></div>
+<p></p>
+<p>Una vez obtenida la ip procedemos a realizar un escaneo con nmap.</p>]]></description>
+</item>
+<item>
+    <title>Kioptrix Level 2 Walkthrough</title>
+    <link>http://localhost:1313/es/kioptrix_level_2/</link>
+    <pubDate>Tue, 22 Aug 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/kioptrix_level_2/</guid>
+    <description><![CDATA[<h1 id="kioptrix-level-2">Kioptrix Level 2</h1>
+<h2 id="instalación">Instalación</h2>
+<p>Por defecto la maquina tiene configurada la tarjeta de red en modo Bridged y no es recomendable por lo que debemos de configurarla en modo NAT que tiene que ser la misma  interfaz que nuestro Kali.</p>
+<p>Para ello antes de abrir la maquina en nuestro VMware nos dirigimos al archivo de configuración.</p>
+<p></p>
+<p>lo abrimos con nuestro editor de texto y cambiamos el nombre de la red por NAT</p>]]></description>
+</item>
+<item>
+    <title>Kioptrix Level 1 Walkthrough</title>
+    <link>http://localhost:1313/es/kioptrix_level_1/</link>
+    <pubDate>Mon, 14 Aug 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/es/kioptrix_level_1/</guid>
+    <description><![CDATA[<h1 id="kioptrix-level-1">Kioptrix: Level 1</h1>
+<h2 id="instalación">Instalación</h2>
+<p>Si iniciamos la maquina por defecto la tarjeta de red esta en modo brigded y esto no es para nada recomendable por lo que debemos cambiarlo a modo NAT para ello debemos ir al archivo de configuración ubicado en la carpeta de la maquina</p>
+<p></p>
+<p>Buscamos Donde ponga Brigded y lo cambiamos por NAT</p>
+<p></p>]]></description>
+</item>
+</channel>
+</rss>

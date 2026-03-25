@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Medium - Tag - AntuSec</title>
+        <link>http://localhost:1313/en/tags/medium/</link>
+        <description>Medium - Tag - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/en/tags/medium/" rel="self" type="application/rss+xml" /><item>
+    <title>DC-9 Walkthrough</title>
+    <link>http://localhost:1313/en/dc-9/</link>
+    <pubDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/en/dc-9/</guid>
+    <description><![CDATA[<p>Machine page: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
+<p>Download link: <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
+<p>Dc-9 is one of the machines from <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> that contains the list of <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit" target="_blank" rel="noopener noreffer ">Tjnull</a>, which is a list created to prepare for the OSCP exam, this machine is the first on the list with a similar level to the machines in the course that the OSCP offers.</p>
+<h2 id="network-scan">Network Scan</h2>
+<p>The first step is to find the IP of our target, for this we use Arp-Scan, this tool allows us to scan a LAN network and discover devices connected to it.</p>]]></description>
+</item>
+</channel>
+</rss>

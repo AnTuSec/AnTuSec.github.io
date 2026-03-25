@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on AntuSec</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on AntuSec</description>
+    <generator>Hugo</generator>
+    <language>es</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 02 May 2024 11:24:09 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Easy</title>
+      <link>http://localhost:1313/tags/easy/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/easy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Intermediate</title>
+      <link>http://localhost:1313/tags/intermediate/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/intermediate/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OSCP</title>
+      <link>http://localhost:1313/tags/oscp/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/oscp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PG</title>
+      <link>http://localhost:1313/tags/pg/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/pg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TjNull</title>
+      <link>http://localhost:1313/tags/tjnull/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/tjnull/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Walkthrough</title>
+      <link>http://localhost:1313/tags/walkthrough/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/walkthrough/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Active Directory</title>
+      <link>http://localhost:1313/tags/active-directory/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/active-directory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AD</title>
+      <link>http://localhost:1313/tags/ad/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/ad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HackTheBox</title>
+      <link>http://localhost:1313/tags/hackthebox/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hackthebox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Medium</title>
+      <link>http://localhost:1313/tags/medium/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/medium/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vulnhub</title>
+      <link>http://localhost:1313/tags/vulnhub/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/vulnhub/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

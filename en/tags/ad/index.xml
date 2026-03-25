@@ -1,0 +1,99 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>AD - Tag - AntuSec</title>
+        <link>http://localhost:1313/en/tags/ad/</link>
+        <description>AD - Tag - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/en/tags/ad/" rel="self" type="application/rss+xml" /><item>
+    <title>Sauna Walkthrough</title>
+    <link>http://localhost:1313/en/sauna/</link>
+    <pubDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/en/sauna/</guid>
+    <description><![CDATA[<h1 id="sauna">Sauna</h1>
+<h2 id="scanning-and-enumeration">Scanning and enumeration</h2>
+<p>Once connected to the VPN and the hackthebox machine started the scanning and enumeration phase by launching the nmap tool by performing a port scan to get services and versions of open ports.</p>
+<p>We started the machine by launching a port scan with nmap.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">    nmap  -T4 -p- -A  10.10.10.175</span></span></code></pre></div></div>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">    Starting Nmap 7.94 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-11-05 13:43 EST
+</span></span><span class="line"><span class="cl">    Stats: 0:00:01 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">0</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Ping Scan
+</span></span><span class="line"><span class="cl">    Parallel DNS resolution of <span class="m">1</span> host. Timing: About 0.00% <span class="k">done</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:00:09 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">    SYN Stealth Scan Timing: About 0.13% <span class="k">done</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:00:16 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">    SYN Stealth Scan Timing: About 1.62% <span class="k">done</span><span class="p">;</span> ETC: 13:53 <span class="o">(</span>0:10:07 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:00:18 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">    SYN Stealth Scan Timing: About 2.25% <span class="k">done</span><span class="p">;</span> ETC: 13:52 <span class="o">(</span>0:08:41 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:00:19 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing SYN Stealth Scan
+</span></span><span class="line"><span class="cl">    SYN Stealth Scan Timing: About 2.61% <span class="k">done</span><span class="p">;</span> ETC: 13:51 <span class="o">(</span>0:08:04 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:02:19 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Service Scan
+</span></span><span class="line"><span class="cl">    Service scan Timing: About 75.00% <span class="k">done</span><span class="p">;</span> ETC: 13:45 <span class="o">(</span>0:00:13 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Stats: 0:03:07 elapsed<span class="p">;</span> <span class="m">0</span> hosts completed <span class="o">(</span><span class="m">1</span> up<span class="o">)</span>, <span class="m">1</span> undergoing Script Scan
+</span></span><span class="line"><span class="cl">    NSE Timing: About 99.96% <span class="k">done</span><span class="p">;</span> ETC: 13:46 <span class="o">(</span>0:00:00 remaining<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Nmap scan report <span class="k">for</span> 10.10.10.175
+</span></span><span class="line"><span class="cl">    Host is up <span class="o">(</span>0.040s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">    Not shown: <span class="m">65515</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    PORT      STATE SERVICE       VERSION
+</span></span><span class="line"><span class="cl">    53/tcp    open  domain        Simple DNS Plus
+</span></span><span class="line"><span class="cl">    80/tcp    open  http          Microsoft IIS httpd 10.0
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_http-server-header: Microsoft-IIS/10.0
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_http-title: Egotistical Bank :: Home
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> http-methods: 
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_  Potentially risky methods: TRACE
+</span></span><span class="line"><span class="cl">    88/tcp    open  kerberos-sec  Microsoft Windows Kerberos <span class="o">(</span>server time: 2023-11-06 01:45:04Z<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    135/tcp   open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span class="line"><span class="cl">    389/tcp   open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    445/tcp   open  microsoft-ds?
+</span></span><span class="line"><span class="cl">    464/tcp   open  kpasswd5?
+</span></span><span class="line"><span class="cl">    593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">    636/tcp   open  tcpwrapped
+</span></span><span class="line"><span class="cl">    3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span class="o">(</span>Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    3269/tcp  open  tcpwrapped
+</span></span><span class="line"><span class="cl">    5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 <span class="o">(</span>SSDP/UPnP<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_http-title: Not Found
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_http-server-header: Microsoft-HTTPAPI/2.0
+</span></span><span class="line"><span class="cl">    9389/tcp  open  mc-nmf        .NET Message Framing
+</span></span><span class="line"><span class="cl">    49668/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    49673/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span class="line"><span class="cl">    49674/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    49677/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    49689/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    49696/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span class="line"><span class="cl">    Warning: OSScan results may be unreliable because we could not find at least <span class="m">1</span> open and <span class="m">1</span> closed port
+</span></span><span class="line"><span class="cl">    Device type: general purpose
+</span></span><span class="line"><span class="cl">    Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Microsoft Windows <span class="m">2019</span> <span class="o">(</span>89%<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Aggressive OS guesses: Microsoft Windows Server <span class="m">2019</span> <span class="o">(</span>89%<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    No exact OS matches <span class="k">for</span> host <span class="o">(</span><span class="nb">test</span> conditions non-ideal<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">    Network Distance: <span class="m">2</span> hops
+</span></span><span class="line"><span class="cl">    Service Info: Host: SAUNA<span class="p">;</span> OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    Host script results:
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> smb2-time: 
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>   date: 2023-11-06T01:46:05
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_  start_date: N/A
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_clock-skew: 7h00m00s
+</span></span><span class="line"><span class="cl">    <span class="p">|</span> smb2-security-mode: 
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>   3:1:1: 
+</span></span><span class="line"><span class="cl">    <span class="p">|</span>_    Message signing enabled and required
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    TRACEROUTE <span class="o">(</span>using port 139/tcp<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    HOP RTT      ADDRESS
+</span></span><span class="line"><span class="cl">    <span class="m">1</span>   40.04 ms 10.10.14.1
+</span></span><span class="line"><span class="cl">    <span class="m">2</span>   40.24 ms 10.10.10.175
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">    Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 206.70 seconds</span></span></code></pre></div></div>
+<p>Observing the result, I see that it is a domain controller and that the domain is EGOTISTICAL-BANK.LOCAL and the first thing I can think of is how to get valid users of the domain controller.</p>]]></description>
+</item>
+</channel>
+</rss>

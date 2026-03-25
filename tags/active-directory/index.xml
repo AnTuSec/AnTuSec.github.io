@@ -1,0 +1,25 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Active Directory - Etiqueta - AntuSec</title>
+        <link>http://localhost:1313/tags/active-directory/</link>
+        <description>Active Directory - Etiqueta - AntuSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/tags/active-directory/" rel="self" type="application/rss+xml" /><item>
+    <title>Sauna Walkthrough</title>
+    <link>http://localhost:1313/sauna/</link>
+    <pubDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</pubDate>
+    <author>AnTuSec</author>
+    <guid>http://localhost:1313/sauna/</guid>
+    <description><![CDATA[<h1 id="sauna">Sauna</h1>
+<h2 id="escaneo-y-enumeración">Escaneo y Enumeración</h2>
+<p>Una vez conectado con la VPN y encendido la maquina en hackthebox inicio la fase de escaneo y enumeración lanzando la herramienta nmap realizando un escaneo de puertos para obtener servicios y versiones de los puertos abiertos.</p>
+<p>Iniciamos la maquina lanzando un escaneo de puertos con nmap.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
+        <span class="copy" title="Copiar al portapapeles"><i class="far fa-copy" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap  -T4 -p- -A  10.10.10.175</span></span></code></pre></div></div>
+<p>Output:</p>]]></description>
+</item>
+</channel>
+</rss>
