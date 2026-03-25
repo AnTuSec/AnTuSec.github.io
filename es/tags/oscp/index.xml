@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>OSCP - Etiqueta - AntuSec</title>
-        <link>http://localhost:1313/es/tags/oscp/</link>
+        <link>https://antusec.github.io/es/tags/oscp/</link>
         <description>OSCP - Etiqueta - AntuSec</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 May 2024 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/es/tags/oscp/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 May 2024 11:24:09 &#43;0200</lastBuildDate><atom:link href="https://antusec.github.io/es/tags/oscp/" rel="self" type="application/rss+xml" /><item>
     <title>Crane</title>
-    <link>http://localhost:1313/es/crane/</link>
+    <link>https://antusec.github.io/es/crane/</link>
     <pubDate>Thu, 02 May 2024 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/crane/</guid>
+    <guid>https://antusec.github.io/es/crane/</guid>
     <description><![CDATA[<h2 id="descripción">Descripción</h2>
 <p>Dificultad: intermedia (valorada como easy)</p>
 <p>En esta maquina de Proving Grounds Practice, veremos la explotación del software SuiteCRM a través de un exploit publico y una escalada de privilegios aprovechándonos de permisos sobre un binario que es posible ejecutar con sudo.</p>
@@ -24,10 +24,10 @@
 </item>
 <item>
     <title>Sauna Walkthrough</title>
-    <link>http://localhost:1313/es/sauna/</link>
+    <link>https://antusec.github.io/es/sauna/</link>
     <pubDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/sauna/</guid>
+    <guid>https://antusec.github.io/es/sauna/</guid>
     <description><![CDATA[<h1 id="sauna">Sauna</h1>
 <h2 id="escaneo-y-enumeración">Escaneo y Enumeración</h2>
 <p>Una vez conectado con la VPN y encendido la maquina en hackthebox inicio la fase de escaneo y enumeración lanzando la herramienta nmap realizando un escaneo de puertos para obtener servicios y versiones de los puertos abiertos.</p>
@@ -42,10 +42,10 @@
 </item>
 <item>
     <title>DC-9 Walkthrough</title>
-    <link>http://localhost:1313/es/dc-9/</link>
+    <link>https://antusec.github.io/es/dc-9/</link>
     <pubDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/dc-9/</guid>
+    <guid>https://antusec.github.io/es/dc-9/</guid>
     <description><![CDATA[<p>Pagina de la maquina: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
 <p>Enlace de descarga:  <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
 <p>Dc-9 es una de las maquinas de <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> que contiene el listado de <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit#gid=0" target="_blank" rel="noopener noreffer ">Tjnull</a>, el cual es un listado creado para prepararse el examen del OSCP, esta maquina es la primera de la lista con un nivel similar a las maquinas del curso que el OSCP ofrece.</p>
@@ -54,10 +54,10 @@
 </item>
 <item>
     <title>Kioptrix Level 5 Walkthrough</title>
-    <link>http://localhost:1313/es/kioptrix_level_5/</link>
+    <link>https://antusec.github.io/es/kioptrix_level_5/</link>
     <pubDate>Sat, 02 Sep 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/kioptrix_level_5/</guid>
+    <guid>https://antusec.github.io/es/kioptrix_level_5/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-5">Kioptrix level 5</h1>
 <h2 id="configuración">Configuración</h2>
 <p>Para que la maquina asigne una ip hay que eliminar el adaptador de red y volver a añadirlo.</p>
@@ -77,10 +77,10 @@
 </item>
 <item>
     <title>Kioptrix Level 3 Walkthrough</title>
-    <link>http://localhost:1313/es/kioptrix_level_3/</link>
+    <link>https://antusec.github.io/es/kioptrix_level_3/</link>
     <pubDate>Fri, 25 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/kioptrix_level_3/</guid>
+    <guid>https://antusec.github.io/es/kioptrix_level_3/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-3">Kioptrix Level 3</h1>
 <h2 id="resolución-de-la-maquina">Resolución de la Maquina</h2>
 <h3 id="escaneo-y-análisis-de-vulnerabilidades">Escaneo y Análisis de Vulnerabilidades</h3>
@@ -96,10 +96,10 @@
 </item>
 <item>
     <title>Kioptrix Level 2 Walkthrough</title>
-    <link>http://localhost:1313/es/kioptrix_level_2/</link>
+    <link>https://antusec.github.io/es/kioptrix_level_2/</link>
     <pubDate>Tue, 22 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/kioptrix_level_2/</guid>
+    <guid>https://antusec.github.io/es/kioptrix_level_2/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-2">Kioptrix Level 2</h1>
 <h2 id="instalación">Instalación</h2>
 <p>Por defecto la maquina tiene configurada la tarjeta de red en modo Bridged y no es recomendable por lo que debemos de configurarla en modo NAT que tiene que ser la misma  interfaz que nuestro Kali.</p>
@@ -109,10 +109,10 @@
 </item>
 <item>
     <title>Kioptrix Level 1 Walkthrough</title>
-    <link>http://localhost:1313/es/kioptrix_level_1/</link>
+    <link>https://antusec.github.io/es/kioptrix_level_1/</link>
     <pubDate>Mon, 14 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/kioptrix_level_1/</guid>
+    <guid>https://antusec.github.io/es/kioptrix_level_1/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-1">Kioptrix: Level 1</h1>
 <h2 id="instalación">Instalación</h2>
 <p>Si iniciamos la maquina por defecto la tarjeta de red esta en modo brigded y esto no es para nada recomendable por lo que debemos cambiarlo a modo NAT para ello debemos ir al archivo de configuración ubicado en la carpeta de la maquina</p>

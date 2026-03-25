@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>TjNull - Tag - AntuSec</title>
-        <link>http://localhost:1313/en/tags/tjnull/</link>
+        <link>https://antusec.github.io/en/tags/tjnull/</link>
         <description>TjNull - Tag - AntuSec</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/en/tags/tjnull/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</lastBuildDate><atom:link href="https://antusec.github.io/en/tags/tjnull/" rel="self" type="application/rss+xml" /><item>
     <title>Sauna Walkthrough</title>
-    <link>http://localhost:1313/en/sauna/</link>
+    <link>https://antusec.github.io/en/sauna/</link>
     <pubDate>Wed, 08 Nov 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/sauna/</guid>
+    <guid>https://antusec.github.io/en/sauna/</guid>
     <description><![CDATA[<h1 id="sauna">Sauna</h1>
 <h2 id="scanning-and-enumeration">Scanning and enumeration</h2>
 <p>Once connected to the VPN and the hackthebox machine started the scanning and enumeration phase by launching the nmap tool by performing a port scan to get services and versions of open ports.</p>
@@ -97,10 +97,10 @@
 </item>
 <item>
     <title>DC-9 Walkthrough</title>
-    <link>http://localhost:1313/en/dc-9/</link>
+    <link>https://antusec.github.io/en/dc-9/</link>
     <pubDate>Sat, 23 Sep 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/dc-9/</guid>
+    <guid>https://antusec.github.io/en/dc-9/</guid>
     <description><![CDATA[<p>Machine page: <a href="https://www.vulnhub.com/entry/dc-9,412/" target="_blank" rel="noopener noreffer ">https://www.vulnhub.com/entry/dc-9,412/</a></p>
 <p>Download link: <a href="https://download.vulnhub.com/dc/DC-9.zip" target="_blank" rel="noopener noreffer ">https://download.vulnhub.com/dc/DC-9.zip</a></p>
 <p>Dc-9 is one of the machines from <a href="https://www.vulnhub.com/" target="_blank" rel="noopener noreffer ">vulnhub</a> that contains the list of <a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/edit" target="_blank" rel="noopener noreffer ">Tjnull</a>, which is a list created to prepare for the OSCP exam, this machine is the first on the list with a similar level to the machines in the course that the OSCP offers.</p>
@@ -109,10 +109,10 @@
 </item>
 <item>
     <title>Kioptrix Level 5 Walkthrough</title>
-    <link>http://localhost:1313/en/kioptrix_level_5/</link>
+    <link>https://antusec.github.io/en/kioptrix_level_5/</link>
     <pubDate>Sat, 02 Sep 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/kioptrix_level_5/</guid>
+    <guid>https://antusec.github.io/en/kioptrix_level_5/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-5">Kioptrix level 5</h1>
 <h2 id="setup">Setup</h2>
 <p>For the machine to assign an ip you must remove the network adapter and add it again.</p>
@@ -132,10 +132,10 @@
 </item>
 <item>
     <title>Kioptrix Level 3 Walkthrough</title>
-    <link>http://localhost:1313/en/kioptrix_level_3/</link>
+    <link>https://antusec.github.io/en/kioptrix_level_3/</link>
     <pubDate>Fri, 25 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/kioptrix_level_3/</guid>
+    <guid>https://antusec.github.io/en/kioptrix_level_3/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-3">Kioptrix Level 3</h1>
 <h2 id="machine-resolution">Machine Resolution</h2>
 <h3 id="scanning-and-vulnerability-analysis">Scanning and Vulnerability Analysis</h3>
@@ -151,10 +151,10 @@
 </item>
 <item>
     <title>Kioptrix Level 2 Walkthrough</title>
-    <link>http://localhost:1313/en/kioptrix_level_2/</link>
+    <link>https://antusec.github.io/en/kioptrix_level_2/</link>
     <pubDate>Tue, 22 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/kioptrix_level_2/</guid>
+    <guid>https://antusec.github.io/en/kioptrix_level_2/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-2">Kioptrix Level 2</h1>
 <h2 id="setup">Setup</h2>
 <p>By default the machine has the network card configured in Bridged mode and it is not recommended so we must configure it in NAT mode which has to be the same interface as our Kali.</p>
@@ -164,10 +164,10 @@
 </item>
 <item>
     <title>Kioptrix Level 1 Walkthrough</title>
-    <link>http://localhost:1313/en/kioptrix_level_1/</link>
+    <link>https://antusec.github.io/en/kioptrix_level_1/</link>
     <pubDate>Mon, 14 Aug 2023 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/en/kioptrix_level_1/</guid>
+    <guid>https://antusec.github.io/en/kioptrix_level_1/</guid>
     <description><![CDATA[<h1 id="kioptrix-level-1">Kioptrix: Level 1</h1>
 <h2 id="install">Install</h2>
 <p>if we start the machine by default the network card is in brigded mode and this is not at all recommended so we must change it to NAT mode for this we must go to the configuration file located in the folder of the machine.

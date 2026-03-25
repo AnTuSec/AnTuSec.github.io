@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>PG - Etiqueta - AntuSec</title>
-        <link>http://localhost:1313/es/tags/pg/</link>
+        <link>https://antusec.github.io/es/tags/pg/</link>
         <description>PG - Etiqueta - AntuSec</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 May 2024 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/es/tags/pg/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 May 2024 11:24:09 &#43;0200</lastBuildDate><atom:link href="https://antusec.github.io/es/tags/pg/" rel="self" type="application/rss+xml" /><item>
     <title>Crane</title>
-    <link>http://localhost:1313/es/crane/</link>
+    <link>https://antusec.github.io/es/crane/</link>
     <pubDate>Thu, 02 May 2024 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/crane/</guid>
+    <guid>https://antusec.github.io/es/crane/</guid>
     <description><![CDATA[<h2 id="descripción">Descripción</h2>
 <p>Dificultad: intermedia (valorada como easy)</p>
 <p>En esta maquina de Proving Grounds Practice, veremos la explotación del software SuiteCRM a través de un exploit publico y una escalada de privilegios aprovechándonos de permisos sobre un binario que es posible ejecutar con sudo.</p>

@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on AntuSec</title>
-    <link>http://localhost:1313/en/tags/</link>
+    <link>https://antusec.github.io/en/tags/</link>
     <description>Recent content in Tags on AntuSec</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Wed, 08 Nov 2023 11:24:09 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://antusec.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Active Directory</title>
-      <link>http://localhost:1313/en/tags/active-directory/</link>
+      <link>https://antusec.github.io/en/tags/active-directory/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/active-directory/</guid>
+      <guid>https://antusec.github.io/en/tags/active-directory/</guid>
       <description></description>
     </item>
     <item>
       <title>AD</title>
-      <link>http://localhost:1313/en/tags/ad/</link>
+      <link>https://antusec.github.io/en/tags/ad/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/ad/</guid>
+      <guid>https://antusec.github.io/en/tags/ad/</guid>
       <description></description>
     </item>
     <item>
       <title>Easy</title>
-      <link>http://localhost:1313/en/tags/easy/</link>
+      <link>https://antusec.github.io/en/tags/easy/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/easy/</guid>
+      <guid>https://antusec.github.io/en/tags/easy/</guid>
       <description></description>
     </item>
     <item>
       <title>HackTheBox</title>
-      <link>http://localhost:1313/en/tags/hackthebox/</link>
+      <link>https://antusec.github.io/en/tags/hackthebox/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/hackthebox/</guid>
+      <guid>https://antusec.github.io/en/tags/hackthebox/</guid>
       <description></description>
     </item>
     <item>
       <title>OSCP</title>
-      <link>http://localhost:1313/en/tags/oscp/</link>
+      <link>https://antusec.github.io/en/tags/oscp/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/oscp/</guid>
+      <guid>https://antusec.github.io/en/tags/oscp/</guid>
       <description></description>
     </item>
     <item>
       <title>TjNull</title>
-      <link>http://localhost:1313/en/tags/tjnull/</link>
+      <link>https://antusec.github.io/en/tags/tjnull/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/tjnull/</guid>
+      <guid>https://antusec.github.io/en/tags/tjnull/</guid>
       <description></description>
     </item>
     <item>
       <title>Walkthrough</title>
-      <link>http://localhost:1313/en/tags/walkthrough/</link>
+      <link>https://antusec.github.io/en/tags/walkthrough/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/walkthrough/</guid>
+      <guid>https://antusec.github.io/en/tags/walkthrough/</guid>
       <description></description>
     </item>
     <item>
       <title>Medium</title>
-      <link>http://localhost:1313/en/tags/medium/</link>
+      <link>https://antusec.github.io/en/tags/medium/</link>
       <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/medium/</guid>
+      <guid>https://antusec.github.io/en/tags/medium/</guid>
       <description></description>
     </item>
     <item>
       <title>Vulnhub</title>
-      <link>http://localhost:1313/en/tags/vulnhub/</link>
+      <link>https://antusec.github.io/en/tags/vulnhub/</link>
       <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/vulnhub/</guid>
+      <guid>https://antusec.github.io/en/tags/vulnhub/</guid>
       <description></description>
     </item>
   </channel>

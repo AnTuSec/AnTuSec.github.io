@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Red Team - Categoría - AntuSec</title>
-        <link>http://localhost:1313/es/categories/red-team/</link>
+        <link>https://antusec.github.io/es/categories/red-team/</link>
         <description>Red Team - Categoría - AntuSec</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 02 Nov 2025 11:24:09 &#43;0200</lastBuildDate><atom:link href="http://localhost:1313/es/categories/red-team/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 02 Nov 2025 11:24:09 &#43;0200</lastBuildDate><atom:link href="https://antusec.github.io/es/categories/red-team/" rel="self" type="application/rss+xml" /><item>
     <title>Cross Site Request Forgery (CSRF)</title>
-    <link>http://localhost:1313/es/csrf/</link>
+    <link>https://antusec.github.io/es/csrf/</link>
     <pubDate>Sun, 02 Nov 2025 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/csrf/</guid>
+    <guid>https://antusec.github.io/es/csrf/</guid>
     <description><![CDATA[<h2 id="introducción">Introducción</h2>
 <p>En este articulo se va a explicar a modo resumen en que consiste la vulnerabilidad web Cross Site Request Forguery (CSRF) y algunas técnicas de como explotarla en diferentes entornos.</p>
 <p>Para la redacción de este articulo me he basado en los laboratorios de <a href="https://portswigger.net/" target="_blank" rel="noopener noreffer ">portswigger</a> que he realizado para la preparación de su certificación BSCP.</p>
@@ -17,10 +17,10 @@
 </item>
 <item>
     <title>Ejecucion Agente AdaptixC2</title>
-    <link>http://localhost:1313/es/agentec2/</link>
+    <link>https://antusec.github.io/es/agentec2/</link>
     <pubDate>Fri, 02 May 2025 11:24:09 &#43;0200</pubDate>
     <author>AnTuSec</author>
-    <guid>http://localhost:1313/es/agentec2/</guid>
+    <guid>https://antusec.github.io/es/agentec2/</guid>
     <description><![CDATA[<h2 id="introducción">Introducción</h2>
 <p>En este post voy a describir una manera de como un atacante o miembros de un Red Team pueden elaborar un fichero malicioso y ser ejecutado en la maquina objetivo con el fin de obtener acceso sin ser detectado por el antivirus.</p>
 <p>Para este post he utilizado el Command and Control AdaptixC2, no voy a entrar en profundidad en como se instala ya que en la propia documentación viene bien detallado el proceso. Aunque si encontráis algún inconveniente a la hora de instalar la versión de GO os recomiendo que descarguéis directamente el paquete de la web oficial <a href="https://go.dev/dl/" target="_blank" rel="noopener noreffer ">aqui</a>.</p>]]></description>

@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Todas las Categorias on AntuSec</title>
-    <link>http://localhost:1313/es/categories/</link>
+    <link>https://antusec.github.io/es/categories/</link>
     <description>Recent content in Todas las Categorias on AntuSec</description>
     <generator>Hugo</generator>
     <language>es</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sun, 02 Nov 2025 11:24:09 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/es/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://antusec.github.io/es/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Red Team</title>
-      <link>http://localhost:1313/es/categories/red-team/</link>
+      <link>https://antusec.github.io/es/categories/red-team/</link>
       <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/es/categories/red-team/</guid>
+      <guid>https://antusec.github.io/es/categories/red-team/</guid>
       <description></description>
     </item>
     <item>
       <title>Proving Grounds</title>
-      <link>http://localhost:1313/es/categories/proving-grounds/</link>
+      <link>https://antusec.github.io/es/categories/proving-grounds/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/es/categories/proving-grounds/</guid>
+      <guid>https://antusec.github.io/es/categories/proving-grounds/</guid>
       <description></description>
     </item>
     <item>
       <title>HacktheBox</title>
-      <link>http://localhost:1313/es/categories/hackthebox/</link>
+      <link>https://antusec.github.io/es/categories/hackthebox/</link>
       <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/es/categories/hackthebox/</guid>
+      <guid>https://antusec.github.io/es/categories/hackthebox/</guid>
       <description></description>
     </item>
     <item>
       <title>Vulnhub</title>
-      <link>http://localhost:1313/es/categories/vulnhub/</link>
+      <link>https://antusec.github.io/es/categories/vulnhub/</link>
       <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/es/categories/vulnhub/</guid>
+      <guid>https://antusec.github.io/es/categories/vulnhub/</guid>
       <description></description>
     </item>
   </channel>
